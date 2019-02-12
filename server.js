@@ -20,10 +20,10 @@ if (process.env.NODE_ENV === "production") {
 // Routes
 app.use(routes);
 
-// If running a test, set syncOptions.force to true
-// clearing the `testdb`
 var syncOptions = { force: false };
+// If running a test, set syncOptions.force to true
 if (process.env.NODE_ENV === "test") {
+    // clearing the `testdb`
     syncOptions.force = true;
 }
 
@@ -33,3 +33,5 @@ db.sequelize.sync(syncOptions).then(function(){
         console.log("Listening on PORT: " + PORT);
     });
 });
+
+module.exports = app; //for testing

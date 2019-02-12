@@ -6,8 +6,8 @@ const headerId = process.env.NUTRI_ID;
 const headerKey = process.env.NUTRI_KEY;
 
 router.get("/edamam/random", function(req, res){
-    var randomNumber = Math.floor(Math.random()*50);
-    var queryURL = "https://api.edamam.com/search?app_id=" + appId + "&app_key=" + appKey + "&diet=low-carb&q=keto&from=" + randomNumber + "&to=" + (randomNumber + 27);
+    const randomNumber = Math.floor(Math.random()*50);
+    const queryURL = "https://api.edamam.com/search?app_id=" + appId + "&app_key=" + appKey + "&diet=low-carb&q=keto&from=" + randomNumber + "&to=" + (randomNumber + 27);
     request(queryURL, function(error, response, body){
         if(error){
             throw error;
@@ -18,21 +18,25 @@ router.get("/edamam/random", function(req, res){
 });
 
 router.get("/edamam/:input", function(req, res){
-    var userInput = req.params.input;
-    var queryURL = "https://api.edamam.com/search?app_id=" + appId + "&app_key=" + appKey + "&diet=low-carb&health=sugar-conscious&from=0&to=81&q=keto+" + userInput;
+    const userInput = req.params.input;
+    const queryURL = "https://api.edamam.com/search?app_id=" + appId + "&app_key=" + appKey + "&diet=low-carb&health=sugar-conscious&from=0&to=81&q=keto+" + userInput;
     request(queryURL, function(error, response, body){
         if(error){
             throw error;
         }else if(!error && response.statusCode === 200){
-            res.json(JSON.parse(body));
+            body = JSON.parse(body);
+            if(body.hits.length === 0){
+                return res.status(404).send("No recipes found!");
+            }
+            res.json(body);
         }
     });
 });
 
 router.get("/nutritionix/:food", function(req, res){
-    var foodInput = req.params.food;
-    var queryURL = "https://trackapi.nutritionix.com/v2/search/instant?detailed=true&query=" + foodInput;
-    var options = {
+    const foodInput = req.params.food;
+    const queryURL = "https://trackapi.nutritionix.com/v2/search/instant?detailed=true&query=" + foodInput;
+    const options = {
         url: queryURL,
         headers: {
             "x-app-id": headerId,
