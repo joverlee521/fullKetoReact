@@ -1,3 +1,4 @@
+// Dependencies
 const router = require("express").Router();
 const request = require("request");
 const appId = process.env.EDAMAM_ID;
@@ -5,6 +6,7 @@ const appKey = process.env.EDAMAM_KEY;
 const headerId = process.env.NUTRI_ID;
 const headerKey = process.env.NUTRI_KEY;
 
+// GET random recipes from EDAMAM API
 router.get("/edamam/random", function(req, res){
     const randomNumber = Math.floor(Math.random()*50);
     const queryURL = "https://api.edamam.com/search?app_id=" + appId + "&app_key=" + appKey + "&diet=low-carb&q=keto&from=" + randomNumber + "&to=" + (randomNumber + 27);
@@ -17,6 +19,7 @@ router.get("/edamam/random", function(req, res){
     });
 });
 
+// GET recipes from EDAMAM API based on search query
 router.get("/edamam/:input", function(req, res){
     const userInput = req.params.input;
     const queryURL = "https://api.edamam.com/search?app_id=" + appId + "&app_key=" + appKey + "&diet=low-carb&health=sugar-conscious&from=0&to=81&q=keto+" + userInput;
@@ -33,6 +36,7 @@ router.get("/edamam/:input", function(req, res){
     });
 });
 
+// GET nutrition info from Nutritionix API based on query
 router.get("/nutritionix/:food", function(req, res){
     const foodInput = req.params.food;
     const queryURL = "https://trackapi.nutritionix.com/v2/search/instant?detailed=true&query=" + foodInput;

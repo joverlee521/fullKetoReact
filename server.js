@@ -20,6 +20,7 @@ if (process.env.NODE_ENV === "production") {
 // Routes
 app.use(routes);
 
+// Setting up sync options for Sequelize
 var syncOptions = { force: false };
 // If running a test, set syncOptions.force to true
 if (process.env.NODE_ENV === "test") {
