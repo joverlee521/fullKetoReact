@@ -1,9 +1,9 @@
 // Dependencies.
 require("dotenv").config();
+const morgan = require("morgan");
 const express = require("express");
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
-
 const passport = require("./config/passport");
 const routes = require("./routes");
 const db = require("./models");
@@ -13,6 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // ===== Middleware =====
+app.use(morgan("dev"));
 // Sets up data handling for express app
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

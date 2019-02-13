@@ -31,7 +31,7 @@ describe("External APIs", () => {
     // Test the GET route for searching recipes
     describe("/GET Edamam Recipes", () => {
         it("it should not GET recipes without a proper search query", (done) => {
-            const query = "asdlfkj"
+            const query = "asdlfkj";
             chai.request(server)
                 .get("/api/external/edamam/" + query)
                 .end((err, res) => {
@@ -52,6 +52,34 @@ describe("External APIs", () => {
                     res.body.should.have.property("hits");
                     res.body.hits.should.be.a("array");
                     res.body.hits.length.should.be.gt(0);
+                    done();
+                });
+        });
+    });
+
+    // Test GET route for nutrition info
+    describe("/GET Nutritionix Nutrition Info", () => {
+        it("it should not GET nutrition info without proper search query", (done) => {
+            const query = "asdfjkl";
+            chai.request(server)
+                .get("/api/external/nutritionix/" + query)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    res.text.should.be.a("string").eql("No food item found!");
+                    done();
+                });
+        });
+
+        it("it should GET nutrition info for searched food", (done) => {
+            const query = "apple";
+            chai.request(server)
+                .get("/api/external/nutritionix/" + query)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a("object");
+                    res.body.should.have.property("common");
+                    res.body.common.should.be.a("array");
+                    res.body.common.length.should.be.gt(0);
                     done();
                 });
         });
