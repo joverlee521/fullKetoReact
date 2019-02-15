@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
-import axios from "axios";
+import API from "./utils/API";
 import NavBar from "./components/NavBar";
-import Home from "./components/pages/Home";
-import IsItKeto from "./components/pages/IsItKeto";
-import Recipes from "./components/pages/Recipes";
-import MealPlanner from "./components/pages/MealPlanner";
+import Home from "./pages/Home";
+import IsItKeto from "./pages/IsItKeto";
+import Recipes from "./pages/Recipes";
+import MealPlanner from "./pages/MealPlanner";
 
 const styles = theme => ({
 	spacer: theme.mixins.toolbar // loads dimensions of the AppBar
@@ -15,13 +15,24 @@ const styles = theme => ({
 
 class App extends Component {
 	state = {
-		loggedIn: false
+		loggedIn: false,
+		user: {}
 	};
 
-	componentDidMount(){
-		axios.get("/auth/user").then(response => {
-			console.log(response.data);
-		});
+	componentWillMount(){
+		API.getCurrentUser()
+			.then(res => {
+				const { user } = res.data;
+				if(user){
+					this.setState({
+						loggedIn: true,
+						user: user
+					});
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	}
 
 	render() {

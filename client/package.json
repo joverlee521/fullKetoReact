@@ -2,7 +2,6 @@
   "name": "reactfullketo",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080/",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "axios": "^0.18.0",

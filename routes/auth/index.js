@@ -28,15 +28,12 @@ router.get("/user", (req, res) => {
 })
 
 // Logout route that destroys sesssion and clears cookie
-router.post("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
     if(req.user){
         req.session.destroy();
         res.clearCookie("connect.sid") // clean up!
-		return res.json({ msg: "logging you out" });
     }
-    else{
-        return res.json({ msg: "no user to logout"});
-    }
+    res.redirect("/");
 });
 
 module.exports = router;
