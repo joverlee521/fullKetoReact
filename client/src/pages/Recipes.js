@@ -1,9 +1,10 @@
 import React from "react";
+import Banner from "../components/Banner";
 
 function Recipes() {
   return (
     <div>
-      <h1>Recipes</h1>
+      <Banner title="Recipes"/>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque velit, lobortis ut magna
         varius, blandit rhoncus sem. Morbi lacinia nisi ac dui fermentum, sed luctus urna tincidunt.

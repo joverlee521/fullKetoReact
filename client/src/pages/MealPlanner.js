@@ -1,9 +1,10 @@
 import React from "react";
+import Banner from "../components/Banner";
 
 function MealPlanner() {
   return (
     <div>
-      <h1>Meal Planner</h1>
+      <Banner title="Meal Planner"/>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque velit, lobortis ut magna
         varius, blandit rhoncus sem. Morbi lacinia nisi ac dui fermentum, sed luctus urna tincidunt.

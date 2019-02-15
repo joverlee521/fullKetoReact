@@ -8,9 +8,12 @@ import Home from "./pages/Home";
 import IsItKeto from "./pages/IsItKeto";
 import Recipes from "./pages/Recipes";
 import MealPlanner from "./pages/MealPlanner";
+import Footer from "./components/Footer";
 
 const styles = theme => ({
-	spacer: theme.mixins.toolbar // loads dimensions of the AppBar
+	// loads dimensions of the AppBar
+	// Used to create spacer div so AppBar doesn't cover main content
+	spacer: theme.mixins.toolbar
 });
 
 class App extends Component {
@@ -20,9 +23,11 @@ class App extends Component {
 	};
 
 	componentWillMount(){
+		// Hit API to see if there is a user currently logged in
 		API.getCurrentUser()
 			.then(res => {
 				const { user } = res.data;
+				// If there is a user, set the state with user info 
 				if(user){
 					this.setState({
 						loggedIn: true,
@@ -46,14 +51,19 @@ class App extends Component {
 					<Route exact path="/isitketo" component= { IsItKeto } />
 					<Route exact path="/recipes" component= { Recipes } />
 					<Route exact path="/mealplanner" component= { MealPlanner } />
+					<Footer />
 	  	  	  	</div>
 	  	  	</Router>
 	  	);
 	}
 }
 
+// Typechecking on the props of the component
 App.propTypes = {
+	// Component expects a prop 'classes' that is an object and is a Required prop
     classes: PropTypes.object.isRequired,
 };
 
+// Using withStyles to inject custom styles
+// passes the "classes" prop to the component
 export default withStyles(styles)(App);
