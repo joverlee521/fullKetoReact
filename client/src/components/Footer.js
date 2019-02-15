@@ -7,8 +7,6 @@ import NutritionixBadge from "../images/NutritionixAPI_hires_flat.png";
 const styles = {
     footer: {
         paddingTop: 15,
-        position: "fixed",
-        bottom: 0,
         background: `linear-gradient(
             rgba(0, 0, 0, 0.3), 
             rgba(0, 0, 0, 0.3)

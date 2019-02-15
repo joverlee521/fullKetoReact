@@ -1,22 +1,32 @@
-import React from "react";
+import React, { Component} from "react";
+import { Grid } from "@material-ui/core";
 import Banner from "../components/Banner";
+import SearchBar from "../components/SearchBar";
+import API from "../utils/API";
+import "./pages.css";
 
-function IsItKeto() {
-  return (
-    <div>
-      <Banner title="Is It Keto?" />
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque velit, lobortis ut magna
-        varius, blandit rhoncus sem. Morbi lacinia nisi ac dui fermentum, sed luctus urna tincidunt.
-        Etiam ut feugiat ex. Cras non risus mi. Curabitur mattis rutrum ipsum, ut aliquet urna
-        imperdiet ac. Sed nec nulla aliquam, bibendum odio eget, vestibulum tortor. Cras rutrum
-        ligula in tincidunt commodo. Morbi sit amet mollis orci, in tristique ex. Donec nec ornare
-        elit. Donec blandit est sed risus feugiat porttitor. Vestibulum molestie hendrerit massa non
-        consequat. Vestibulum vitae lorem tortor. In elementum ultricies tempus. Interdum et
-        malesuada fames ac ante ipsum primis in faucibus.
-      </p>
-    </div>
-  );
+class IsItKeto extends Component {
+	state = {
+		foodResults: []
+	};
+
+	searchInput = input => {
+		console.log("searching");
+		API.getNutritionInfo(input)
+			.then(res => {
+				this.setState({ foodResults: res.data.common });
+			})
+			.catch(err => console.log(err));		
+	}
+
+	render(){
+		return (
+			<Grid container direction="column" className="container" justify="flex-start" alignContent="flex-start">
+				<Banner title="Is It Keto?" />
+				<SearchBar placeholder="Search food items" search={this.searchInput}/>
+			</Grid>
+		);
+	}
 }
 
 export default IsItKeto;

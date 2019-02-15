@@ -9,6 +9,7 @@ import IsItKeto from "./pages/IsItKeto";
 import Recipes from "./pages/Recipes";
 import MealPlanner from "./pages/MealPlanner";
 import Footer from "./components/Footer";
+import "./App.css";
 
 const styles = theme => ({
 	// loads dimensions of the AppBar
@@ -44,7 +45,7 @@ class App extends Component {
 		const { classes } = this.props;
 	  	return (
 	  	  	<Router>
-	  	  	  	<div>
+	  	  	  	<div id="app">
 	  	  	  	  	<NavBar loggedIn={ this.state.loggedIn }/>
 					<div className={ classes.spacer }></div>
 					<Route exact path="/" component={ Home } />
