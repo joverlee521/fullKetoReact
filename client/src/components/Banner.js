@@ -11,7 +11,8 @@ const styles = {
           ), url(${BannerBackground})`,
         backgroundSize: "cover",
         color: "#fff",
-        flex: "1 0 auto"
+        flex: "1 0 auto",
+        padding: 20
     },
     centerText: {
         textAlign: "center"

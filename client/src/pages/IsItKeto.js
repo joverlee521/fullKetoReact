@@ -12,10 +12,8 @@ class IsItKeto extends Component {
 	};
 
 	searchInput = input => {
-		console.log("searching");
 		API.getNutritionInfo(input)
 			.then(res => {
-				console.log(res.data);
 				this.setState({ foodResult: res.data });
 			})
 			.catch(err => console.log(err));		

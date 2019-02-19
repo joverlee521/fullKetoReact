@@ -7,5 +7,8 @@ export default {
     },
     getNutritionInfo: function(query){
         return axios.get("/api/external/nutritionix/" + query);
+    },
+    getEdamamRecipes: function(query){
+        return axios.get("/api/external/edamam/" + query);
     }
 };
