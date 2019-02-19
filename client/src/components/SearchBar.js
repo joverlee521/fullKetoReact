@@ -1,23 +1,26 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Grid, Button, FormControl, InputLabel, Input, InputAdornment, Icon, withStyles } from "@material-ui/core";
-import { brown } from "@material-ui/core/colors";
+import { Grid, Button, FormControl, Input, InputAdornment, Icon, withStyles } from "@material-ui/core";
+import { orange } from "@material-ui/core/colors";
 
 const styles = {
     grow: {
-        flex: 1
+        flex: "1 0 auto"
     },
     underline: {
-        borderBottom: "1px solid #482311 !important",
-        "&:hover:not($disabled):not($focused):not($error):before": {
-            borderBottom: "2px solid #482311 !important"
+        borderBottom: `1px solid ${orange[900]} !important`,
+        "&:hover:before": {
+            borderBottom: `2px solid ${orange[900]} !important`
+        },
+        "&:after": {
+            borderBottom: `2px solid ${orange[800]} !important`
         }
     },
     searchButton: {
-        backgroundColor: brown[900],
+        backgroundColor: orange[900],
         color: "#fff",
         "&:hover": {
-            backgroundColor: brown[400]
+            backgroundColor: orange[400]
         }
     }
 };

@@ -12,7 +12,8 @@ const styles = {
             rgba(0, 0, 0, 0.3)
           ), url(${FooterBackground})`,
         backgroundSize: "cover",
-        color: "#fff"
+        color: "#fff",
+        flex: "0 1 auto"
     },
     nutritionixBadge: {
         backgroundColor: "#fff",

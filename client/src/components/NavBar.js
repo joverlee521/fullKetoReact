@@ -9,6 +9,7 @@ import GoogleSignIn from "../images/btn_google_signin_light_normal_web.png";
 const styles = theme => ({
     appBar: {
         background: orange[800],
+        flexShrink: 0
     },
     grow: {
         display: "flex",

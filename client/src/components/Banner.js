@@ -11,7 +11,8 @@ const styles = {
           ), url(${BannerBackground})`,
         backgroundSize: "cover",
         height: "25vh",
-        color: "#fff"
+        color: "#fff",
+        flex: "0 1 auto"
     }
 };
 
