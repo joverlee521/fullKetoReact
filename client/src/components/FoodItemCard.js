@@ -1,35 +1,47 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Typography, withStyles } from "@material-ui/core";
+import { Grid, Card, CardContent, CardMedia, Typography, withStyles } from "@material-ui/core";
 
 const styles = theme => ({
     container: {
-        display: "flex",
-        margin: "0vh 0vw 10vh",
+        margin: "0vh 5vw 5vh",
         [theme.breakpoints.up("md")]: {
             margin: "0vh 10vw 10vh"
         },
-        justifyContent: "space-between",
-        alignItems: "center",
+        
         flex: "1 0 auto"
+    },
+    card: {
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+        alignItems: "center",
+        textAlign: "justify"
     },
     foodImage : {
         height: 150,
-        width: 150
+        width: 150,
+        backgroundSize: "contain",
+        margin: 10
+    },
+    redText: {
+        color: "red"
+    },
+    greenText: {
+        color: "green"
     }
 });
 
 function FoodItemCard(props){
     const { classes, foodObj } = props;
-    const { food_name, serving_unit, full_nutrients, photo } = foodObj;
+    const { food_name, serving_weight_grams, full_nutrients, photo } = foodObj;
     let totalCarb = 0;
     let fiber = 0;
     let netCarb = 0;
-    let ketoStatus = false;
     for(var j = 0; j < full_nutrients.length; j++){
-        if(full_nutrients[j].attr_id == 205){
+        if(full_nutrients[j].attr_id === 205){
             totalCarb = full_nutrients[j].value.toFixed(2);
         }
-        if(full_nutrients[j].attr_id == 291){
+        if(full_nutrients[j].attr_id === 291){
             fiber = full_nutrients[j].value.toFixed(2);
         }
     }
@@ -39,21 +51,22 @@ function FoodItemCard(props){
     else{
         netCarb = totalCarb;
     }
-    if(netCarb < 20){
-        ketoStatus = true;
-    }
     return(
-        <Card className={ classes.container }>
-            <CardMedia className={ classes.foodImage } image={ photo.thumb }/>
-            <CardContent>
-                <Typography variant="h6">Food Name: { food_name }</Typography>
-                <Typography variant="h6">Serving Size: { serving_unit }</Typography>
-                <Typography variant="h6">Net Carbs: { netCarb } grams</Typography>
-            </CardContent>
-            <CardContent>
-                <Typography variant="h5">Keto status: { ketoStatus ? "YES!" : "NO!" }</Typography>
-            </CardContent>
-        </Card>
+        <Grid item className={ classes.container }>
+            <Card className={ classes.card }>
+                <CardMedia className={ classes.foodImage } image={ photo.thumb }/>
+                <CardContent>
+                    <Typography variant="h6">Food Name: { food_name }</Typography>
+                    <Typography variant="h6">Serving Size: { serving_weight_grams } grams</Typography>
+                    <Typography variant="h6">Net Carbs: { netCarb } grams</Typography>
+                </CardContent>
+                <CardContent>
+                    <Typography variant="h5">
+                        Is it Keto? <span className={ netCarb < 20 ? classes.greenText : classes.redText }>{ netCarb < 20 ? "YES!" : "NO!" }</span>
+                    </Typography>
+                </CardContent>
+            </Card>
+        </Grid>
     )
 }
 

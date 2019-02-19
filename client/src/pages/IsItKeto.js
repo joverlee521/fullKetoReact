@@ -24,7 +24,7 @@ class IsItKeto extends Component {
 	render(){
 		return (
 			<Grid container direction="column" className="container" justify="flex-start" alignContent="flex-start">
-				<Banner title="Is It Keto?" />
+				<Banner title="Is It Keto?" subtitle="Reminder: Keep daily net carbs under 20 grams!"/>
 				<SearchBar placeholder="Search food items" search={this.searchInput}/>
 				{ this.state.foodResult !== null && <FoodItemCard foodObj={ this.state.foodResult }/> }
 			</Grid>

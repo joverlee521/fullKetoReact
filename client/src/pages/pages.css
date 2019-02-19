@@ -1,12 +1,14 @@
 /* For mobile, want the page to take up 100vh */
 .container {
-    flex: 8 0 100vh;
-	background-color: #FCFFC2;
+    flex: 3 0 100%;
+    flex-wrap: nowrap !important;
+    justify-content: space-between;
+    background-color: #FCFFC2;
 }
 
 /* For desktop, want the page to only take up 75vh */
 @media screen and (min-width: 768px){
     .container {
-        flex: 8 0 75vh;
+        flex: 8 0 70vh;
     }
 }

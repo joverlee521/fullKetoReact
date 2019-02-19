@@ -10,18 +10,21 @@ const styles = {
             rgba(0, 0, 0, 0.3)
           ), url(${BannerBackground})`,
         backgroundSize: "cover",
-        height: "25vh",
         color: "#fff",
-        flex: "0 1 auto"
+        flex: "1 0 auto"
+    },
+    centerText: {
+        textAlign: "center"
     }
 };
 
 function Banner(props){
     const { classes } = props;
     return(
-        <Grid container alignItems="center" justify="center" className={ classes.banner }>
+        <Grid container item alignItems="center" justify="center" className={ classes.banner }>
             <Grid item>
-                <Typography color="inherit" variant="display3">{ props.title }</Typography>
+                <Typography color="inherit" variant="display3" className={ classes.centerText }>{ props.title }</Typography>
+                { props.subtitle && <Typography color="inherit" variant="subheading" className={ classes.centerText }>{ props.subtitle }</Typography>}
             </Grid>
         </Grid>
     );

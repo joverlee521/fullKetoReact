@@ -1,4 +1,7 @@
 #app {
     display: flex;
+    flex-direction: column;
     flex-flow: column;
+    justify-content: space-between;
+    min-height: 100vh;
 }

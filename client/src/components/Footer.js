@@ -35,7 +35,7 @@ const styles = {
 function Footer(props){
     const { classes } = props;
     return(
-        <Grid container className={ classes.footer } spacing={8}>
+        <Grid container className={ classes.footer }>
             <Grid container item>
                 <Grid container item direction="column" xs={6} justify="center" alignItems="center" spacing={8}>
                     <Grid item>

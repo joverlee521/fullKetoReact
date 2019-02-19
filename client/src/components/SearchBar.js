@@ -4,8 +4,9 @@ import { Grid, Button, FormControl, Input, InputAdornment, Icon, withStyles } fr
 import { orange } from "@material-ui/core/colors";
 
 const styles = {
-    grow: {
-        flex: "1 0 auto"
+    container: {
+        flex: "2 1 auto",
+        padding: 10
     },
     underline: {
         borderBottom: `1px solid ${orange[900]} !important`,
@@ -17,6 +18,7 @@ const styles = {
         }
     },
     searchButton: {
+        margin: 5,
         backgroundColor: orange[900],
         color: "#fff",
         "&:hover": {
@@ -49,8 +51,8 @@ class SearchBar extends Component{
     render(){
         const { classes, placeholder } = this.props
         return(
-            <Grid container component={"form"} spacing={8} alignItems="center" justify="center" onSubmit={this.formSubmit} className={ classes.grow }>
-                <Grid item xs={8}>
+            <Grid container item component={"form"} alignItems="center" justify="center" onSubmit={this.formSubmit} className={ classes.container }>
+                <Grid item xs={ 8 }>
                     <FormControl fullWidth>
                         <Input
                           id="search-bar"
