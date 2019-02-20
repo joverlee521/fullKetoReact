@@ -37,7 +37,7 @@ class Pagination extends Component{
 
     componentDidUpdate(prevProps){
         if(prevProps.pages !== this.props.pages){
-            this.setState({ pages: this.props.pages });
+            this.setState({ pages: this.props.pages, currentPage: 1 });
         }
     }
 

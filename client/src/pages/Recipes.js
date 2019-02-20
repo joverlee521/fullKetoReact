@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Grid, withStyles } from "@material-ui/core";
+import { Grid, Button, withStyles } from "@material-ui/core";
+import { orange } from "@material-ui/core/colors";
 import Banner from "../components/Banner";
 import SearchBar from "../components/SearchBar";
 import RecipeCard from "../components/RecipeCard";
@@ -11,6 +12,20 @@ import "./pages.css";
 const styles = {
 	recipeDisplay: {
 		padding: "0px 20px"
+	},
+	randomButtonContainer: {
+		marginTop: -50,
+		marginBottom: 100
+	},
+	randomContainerPostSearch: {
+		margin: "20px 0px"
+	},
+	randomButton: {
+		backgroundColor: orange[900],
+        color: "#fff",
+        "&:hover": {
+            backgroundColor: orange[400]
+        }
 	}
 }
 
@@ -25,24 +40,41 @@ class Recipes extends Component {
 	}
 
 	searchRecipes = input => {
-		API.getEdamamRecipes(input)
-			.then(res => {
-				const recipeState = [];
-				let recipes = res.data.hits;
-				// Separating the returned array into smaller subarrays to make pagination easier
-				// Continue splicing the original returned array until it has a length of 9 or less
-				while(recipes.length > 9){
-					// Each subarray has a length of 9
-					let subarray = recipes.splice(0, 9);
-					recipeState.push(subarray);
-				}
-				// If the original array has any left over recipes, push it into the new array as well
-				if(recipes.length > 0){
-					recipeState.push(recipes);
-				}
-				this.setState({ recipes: recipeState });
-			})
-			.catch(err => console.log(err));
+		this.setState({ recipes: [] }, () => {
+			API.getEdamamRecipes(input)
+				.then(res => this.setRecipeState(res))
+				.catch(err => console.log(err));
+		})
+	}
+
+	getRandomRecipes = () => {
+		this.setState({ recipes: [] }, () => {
+			API.getRandomRecipes()
+				.then(res => this.setRecipeState(res))
+				.catch(err => console.log(err));
+		})
+	}
+
+	setRecipeState = result => {
+		let recipes = result.data.hits;
+		const recipeState = this.createSubArrays(recipes);
+		this.setState({ recipes: recipeState, page: 1 });
+	}
+
+	createSubArrays = array => {
+		const newArray = [];
+		// Separating the returned array into smaller subarrays to make pagination easier
+		// Continue splicing the original returned array until it has a length of 12 or less
+		while(array.length > 12){
+			// Each subarray has a length of 12
+			let subArray = array.splice(0, 12);
+			newArray.push(subArray);
+		}
+		// If the original array has any left over recipes, push it into the new array as well
+		if(array.length > 0){
+			newArray.push(array);
+		}
+		return newArray;
 	}
 
 	changePage = newPage => {
@@ -50,7 +82,6 @@ class Recipes extends Component {
 	}
 
 	scrollToTop = () => {
-		console.log("scroll");
 		this.myRef.current.scrollIntoView();
 	}
 
@@ -61,6 +92,11 @@ class Recipes extends Component {
 				<div ref={ this.myRef }></div>
 				<Banner title="Recipes"/>
 				<SearchBar placeholder="Search ingredients" search={ this.searchRecipes }/>
+				<Grid container item justify="center" alignContent="flex-start" className={ this.state.recipes.length > 0 ? classes.randomContainerPostSearch : classes.randomButtonContainer }>
+                    <Button onClick={ this.getRandomRecipes } variant="contained" className={ classes.randomButton }>
+                      Get Random Recipes
+                    </Button>
+                </Grid>
 				{ this.state.recipes.length > 0 && 
 					<div>
 						<Grid container item className={ classes.recipeDisplay }>

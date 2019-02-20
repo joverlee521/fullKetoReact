@@ -10,5 +10,8 @@ export default {
     },
     getEdamamRecipes: function(query){
         return axios.get("/api/external/edamam/" + query);
+    },
+    getRandomRecipes: function(){
+        return axios.get("/api/external/edamam/random");
     }
 };
