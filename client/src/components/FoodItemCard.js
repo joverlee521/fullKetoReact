@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Grid, Card, CardContent, CardMedia, Typography, withStyles } from "@material-ui/core";
 
 const styles = theme => ({
@@ -69,5 +70,9 @@ function FoodItemCard(props){
         </Grid>
     )
 }
+
+FoodItemCard.propTypes = {
+    classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(FoodItemCard);

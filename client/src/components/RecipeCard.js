@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Grid, Card, CardMedia, CardContent, Typography, withStyles } from "@material-ui/core";
 
 const styles = {
@@ -24,7 +25,7 @@ const styles = {
 function RecipeCard(props){
     const { classes, recipe } = props;
     return(
-        <Grid item xs={ 12 } sm={ 6 } md={ 4 } lg={ 3 } className={ classes.container }>
+        <Grid item xs={ 12 } sm={ 6 } md={ 4 } className={ classes.container }>
             <Card className={ classes.card }>
                 <CardMedia image={ recipe.image } className={ classes.recipeImage }/>
                 <CardContent className={ classes.cardContent }>
@@ -34,5 +35,9 @@ function RecipeCard(props){
         </Grid>
     );
 }
+
+RecipeCard.propTypes = {
+    classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(RecipeCard);
