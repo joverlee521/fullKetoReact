@@ -6,6 +6,7 @@ import Banner from "../components/Banner";
 import SearchBar from "../components/SearchBar";
 import RecipeCard from "../components/RecipeCard";
 import Pagination from "../components/Pagination";
+import ErrorModal from "../components/ErrorModal";
 import API from "../utils/API";
 import "./pages.css";
 
@@ -34,24 +35,26 @@ class Recipes extends Component {
 		super(props);
 		this.state = {
 			recipes: [],
-			page: 1
+			page: 1,
+			error: false,
+			errorMessage: ""
 		}
 		this.myRef = React.createRef();
 	}
 
 	searchRecipes = input => {
-		this.setState({ recipes: [] }, () => {
+		this.setState({ recipes: [], error: false }, () => {
 			API.getEdamamRecipes(input)
 				.then(res => this.setRecipeState(res))
-				.catch(err => console.log(err));
+				.catch(err => this.setErrorState(err));
 		})
 	}
 
 	getRandomRecipes = () => {
-		this.setState({ recipes: [] }, () => {
+		this.setState({ recipes: [], error: false }, () => {
 			API.getRandomRecipes()
 				.then(res => this.setRecipeState(res))
-				.catch(err => console.log(err));
+				.catch(err => this.setErrorState(err));
 		})
 	}
 
@@ -75,6 +78,13 @@ class Recipes extends Component {
 			newArray.push(array);
 		}
 		return newArray;
+	}
+
+	setErrorState = error => {
+		if(error.response.status === 404){
+			return this.setState({ recipes: [], error: true, errorMessage: error.response.data });
+		}
+		return this.setState({ recipes: [], error: true, errorMessage: "Something went wrong! Please try again!" });
 	}
 
 	changePage = newPage => {
@@ -107,6 +117,7 @@ class Recipes extends Component {
 						<Pagination pages={ this.state.recipes.length } changePage={ this.changePage }/>
 					</div>
 				}
+				<ErrorModal open={ this.state.error } message={ this.state.errorMessage } />
 			</Grid>
 		);
 	}

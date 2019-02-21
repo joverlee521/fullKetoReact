@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Banner from "../components/Banner";
 import SearchBar from "../components/SearchBar";
 import FoodItemCard from "../components/FoodItemCard";
@@ -15,16 +15,16 @@ class IsItKeto extends Component {
 	};
 
 	searchInput = input => {
-		this.setState({ foodResults: null, error: false, errorMessage: "" }, () => {
+		this.setState({ foodResults: null, error: false }, () => {
 			API.getNutritionInfo(input)
 				.then(res => {
 					this.setState({ foodResult: res.data, error: false });
 				})
 				.catch(err => {
 					if(err.response.status === 404){
-						this.setState({ foodResult: null, error: true, errorMessage: err.response.data });
+						return this.setState({ foodResult: null, error: true, errorMessage: err.response.data });
 					}
-
+					return this.setState({ foodResult: null, error: true, errorMessage: "Something went wrong! Please try again!" });
 				});	
 		});	
 	}
