@@ -14,7 +14,10 @@ const styles = {
     pageBtn: {
         color: orange[900],
         minWidth: 30,
-        margin: "0px 10px"
+        margin: "0px 10px",
+        "&:hover": {
+            backgroundColor: orange[200]
+        }
     },
     activeBtn: {
         color: "#fff",

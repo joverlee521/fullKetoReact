@@ -18,7 +18,7 @@ const styles = {
 		marginBottom: 100
 	},
 	randomContainerPostSearch: {
-		margin: "20px 0px"
+		margin: "20px 0px 30px"
 	},
 	randomButton: {
 		backgroundColor: orange[900],

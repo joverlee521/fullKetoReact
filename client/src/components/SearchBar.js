@@ -6,7 +6,7 @@ import { orange } from "@material-ui/core/colors";
 const styles = {
     container: {
         flex: "2 1 auto",
-        padding: 10
+        padding: "20px 10px"
     },
     underline: {
         borderBottom: `1px solid ${orange[900]} !important`,
