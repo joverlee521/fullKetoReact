@@ -9,7 +9,7 @@ const headerKey = process.env.NUTRI_KEY;
 // GET 27 random recipes from EDAMAM API
 router.get("/edamam/random", function(req, res){
     const randomNumber = Math.floor(Math.random()*50);
-    const queryURL = "https://api.edamam.com/search?app_id=" + appId + "&app_key=" + appKey + "&diet=low-carb&q=keto&from=" + randomNumber + "&to=" + (randomNumber + 27);
+    const queryURL = "https://api.edamam.com/search?app_id=" + appId + "&app_key=" + appKey + "&diet=low-carb&q=keto&from=" + randomNumber + "&to=" + (randomNumber + 36);
     request(queryURL, function(error, response, body){
         if(error){
             throw error;
@@ -55,7 +55,7 @@ router.get("/nutritionix/:food", function(req, res){
             if(body.common.length === 0){
                 return res.status(404).send("No food item found!");
             }
-            res.json(body);
+            res.json(body.common[0]);
         }
     });
 });
