@@ -52,7 +52,7 @@ class App extends Component {
 					<Route exact path="/isitketo" component= { IsItKeto } />
 					<Route exact path="/recipes" component= { Recipes } />
 					<Route exact path="/mealplanner" component= { MealPlanner } />
-					<Footer />
+					<Footer/>
 	  	  	  	</div>
 	  	  	</Router>
 	  	);

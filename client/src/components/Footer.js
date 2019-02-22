@@ -51,10 +51,14 @@ function Footer(props){
                 </Grid>
                 <Grid container item direction="column" xs={6} alignItems="center">
                     <Grid item>
-                        <div id="edamam-badge" data-color="white"></div>
+                        <a href="https://www.edamam.com" title="Powered by Edamam" target="_blank" rel="noopener noreferrer">
+                            <img alt="Powered by Edamam" src="https://developer.edamam.com/images/white.png" height="40" width="200" />
+                        </a>
                     </Grid>
                     <Grid item>
-                        <img src={NutritionixBadge} alt="Nutritionix Badge" width="200" className={ classes.nutritionixBadge }></img>
+                        <a href="https://www.nutritionix.com/business/api" title="Powered by Nutritionix" target="_blank" rel="noopener noreferrer">
+                            <img alt="Powered by Nutritionix" src={NutritionixBadge} width="200" className={ classes.nutritionixBadge }></img>
+                        </a>
                     </Grid>
                 </Grid>
             </Grid>

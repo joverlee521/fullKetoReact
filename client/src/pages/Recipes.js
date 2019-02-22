@@ -98,7 +98,7 @@ class Recipes extends Component {
 	render(){
 		const { classes } = this.props
 		return (
-			<Grid container direction="column" className="container" justify="flex-start" alignContent="flex-start">
+			<Grid container direction="column" className="container">
 				<div ref={ this.myRef }></div>
 				<Banner title="Recipes"/>
 				<SearchBar placeholder="Search ingredients" search={ this.searchRecipes }/>

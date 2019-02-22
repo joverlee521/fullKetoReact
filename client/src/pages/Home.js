@@ -1,22 +1,92 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Grid, Icon, Avatar, Button, Typography, withStyles } from "@material-ui/core";
+import { deepOrange } from "@material-ui/core/colors";
 import Banner from "../components/Banner";
 
-function Home() {
+const styles = theme => ({
+	container: {
+		padding: "0% 1%",
+		[theme.breakpoints.up("sm")]: {
+			padding: "0% 5%"
+		},
+		[theme.breakpoints.up("md")]: {
+			padding: "0% 15%"
+		},
+		[theme.breakpoints.up("lg")]: {
+			padding: "0% 20%"
+		}
+	},
+	link: {
+		margin: "10px 10px 0px 10px",
+		"&:hover": {
+			backgroundColor: "transparent"
+		}
+	},
+	headline: {
+		padding: "20px 10px",
+		color: deepOrange[700]
+	},
+	icon: {
+		padding: 5,
+		backgroundColor: deepOrange[700],
+		color: "#fff"
+	},
+	description: {
+		paddingLeft: 80,
+		[theme.breakpoints.up("md")]: {
+			paddingLeft: 120
+		}
+	}
+});
+
+function Home(props) {
+	const { classes } = props;
 	return (
-		<div>
-			<Banner title="Full Keto"/>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque velit, lobortis ut magna
-				varius, blandit rhoncus sem. Morbi lacinia nisi ac dui fermentum, sed luctus urna tincidunt.
-				Etiam ut feugiat ex. Cras non risus mi. Curabitur mattis rutrum ipsum, ut aliquet urna
-				imperdiet ac. Sed nec nulla aliquam, bibendum odio eget, vestibulum tortor. Cras rutrum
-				ligula in tincidunt commodo. Morbi sit amet mollis orci, in tristique ex. Donec nec ornare
-				elit. Donec blandit est sed risus feugiat porttitor. Vestibulum molestie hendrerit massa non
-				consequat. Vestibulum vitae lorem tortor. In elementum ultricies tempus. Interdum et
-				malesuada fames ac ante ipsum primis in faucibus.
-			</p>
-		</div>
+		<Grid container direction="column" className="container">
+			<Banner title="Full Keto" subtitle="Keto Simplified!"/>
+			<Grid container item className={ classes.container }>
+				<Grid item xs={ 12 }>
+					<Button className={ classes.link } component={ Link } to="/isitketo">
+						<Avatar className={ classes.icon }>
+							<Icon fontSize="large">search</Icon>
+						</Avatar>
+						<Typography variant="h5" className={ classes.headline }>Is it Keto?</Typography>
+					</Button>
+				</Grid>
+				<Grid item xs={ 12 }>
+					<Typography gutterBottom variant="headline" className={ classes.description }>Search individual food items to see their carbohydrate content.</Typography>
+				</Grid>
+				<Grid item xs={ 12 }>
+					<Button className={ classes.link } component={ Link } to="/recipes">
+						<Avatar className={ classes.icon }>
+							<Icon fontSize="large">restaurant</Icon>
+						</Avatar>
+						<Typography variant="h5" className={ classes.headline }>Recipes</Typography>
+					</Button>
+				</Grid>
+				<Grid item xs={ 12 }>
+					<Typography gutterBottom variant="headline" className={ classes.description }>Search ingredients to find Keto recipes.</Typography>
+				</Grid>
+				<Grid item xs={ 12 }>
+					<Button className={ classes.link } component={ Link } to="/mealplanner">
+						<Avatar className={ classes.icon }>
+							<Icon fontSize="large" >calendar_today</Icon>
+						</Avatar>
+						<Typography variant="h5" className={ classes.headline }>Meal Planner</Typography>
+					</Button>
+				</Grid>
+				<Grid item xs={ 12 }>
+					<Typography gutterBottom variant="headline" className={ classes.description }>Sign in to access your personal meal planner.</Typography>
+				</Grid>
+			</Grid>
+		</Grid>
 	);
 }
 
-export default Home;
+Home.propTypes = {
+	classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(Home);
