@@ -7,16 +7,16 @@ import Banner from "../components/Banner";
 
 const styles = theme => ({
 	container: {
-		padding: "0% 1%",
+		padding: "0% 1% 5%",
 		[theme.breakpoints.up("sm")]: {
-			padding: "0% 5%"
+			padding: "0% 5% 5%"
 		},
 		[theme.breakpoints.up("md")]: {
-			padding: "0% 15%"
+			padding: "0% 15% 3%"
 		},
 		[theme.breakpoints.up("lg")]: {
-			padding: "0% 20%"
-		}
+			padding: "0% 20% 2%"
+		},
 	},
 	link: {
 		margin: "10px 10px 0px 10px",
