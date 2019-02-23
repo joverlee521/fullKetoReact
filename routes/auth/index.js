@@ -14,7 +14,6 @@ router.get("/login", (req, res, next) => {
 router.get("/google/callback", (req, res, next) => {
     // Uses to the googleStrategy to find or create user in database
     passport.authenticate("google", {
-    // TODO: added in redirect routes!
     successRedirect: req.session.previous_url,
     failureRedirect: "/"
     })(req, res, next);

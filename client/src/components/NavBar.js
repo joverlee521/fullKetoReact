@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { AppBar, Toolbar, Typography, Button, withStyles, Grid, Hidden, IconButton, Icon, Menu, MenuItem } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
-import GoogleSignIn from "../images/btn_google_signin_light_normal_web.png";
+import GoogleSignInButton from "./GoogleSignInButton";
 
 const styles = theme => ({
     appBar: {
@@ -32,6 +32,11 @@ const styles = theme => ({
     activeNavLink: {
         border: "2px solid",
         borderColor: "white"
+    },
+    menuSignIn: {
+        "&:hover": {
+            backgroundColor: "transparent"
+        }
     }
 });
 
@@ -97,10 +102,7 @@ class NavBar extends Component{
                                             Logout
                                         </Button>
                                     </a>
-                                    // Must use anchor tag to access Google log in (does not work with axios)
-                                    : <a href="/auth/login"> 
-                                        <img src={ GoogleSignIn } width="160" height="auto" alt="Sign in with Google" />
-                                    </a>
+                                    : <GoogleSignInButton width="160px" />
                                 }
                             </Grid>
                         </Hidden>
@@ -128,11 +130,9 @@ class NavBar extends Component{
                                             Logout
                                         </MenuItem>
                                     </a>
-                                    : <a href="/auth/login">
-                                        <MenuItem onClick={ this.handleClose }>
-                                            <img src={ GoogleSignIn } width="160" height="auto" alt="Sign in with Google" />
-                                        </MenuItem>
-                                    </a>
+                                    : <MenuItem onClick={ this.handleClose } className={ classes.menuSignIn }>
+                                        <GoogleSignInButton width="160px" />
+                                    </MenuItem>
                                 }
                             </Menu>
                         </Hidden>
