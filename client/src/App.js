@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core";
 import API from "./utils/API";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 import IsItKeto from "./pages/IsItKeto";
 import Recipes from "./pages/Recipes";
 import MealPlanner from "./pages/MealPlanner";
@@ -48,10 +49,12 @@ class App extends Component {
 	  	  	  	<div id="app">
 	  	  	  	  	<NavBar loggedIn={ this.state.loggedIn }/>
 					<div className={ classes.spacer }></div>
-					<Route exact path="/" component={ Home } />
+					<Route exact path="/" 
+						render={ props => this.state.loggedIn ? <Dashboard {...props} user={ this.state.user }/> : <Home/> }/>
 					<Route exact path="/isitketo" component= { IsItKeto } />
 					<Route exact path="/recipes" component= { Recipes } />
-					<Route exact path="/mealplanner" render={ props => <MealPlanner {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>} />
+					<Route exact path="/mealplanner" 
+						render={ props => <MealPlanner {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>} />
 					<Footer/>
 	  	  	  	</div>
 	  	  	</Router>

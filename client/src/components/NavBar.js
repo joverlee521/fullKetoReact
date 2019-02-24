@@ -19,6 +19,7 @@ const styles = theme => ({
     logoutBtn: {
         color: theme.palette.getContrastText(orange[300]),
         backgroundColor: orange[300],
+        textDecoration: "none !important",
         "&:hover":{
             backgroundColor: orange[50]
         }
@@ -37,6 +38,9 @@ const styles = theme => ({
         "&:hover": {
             backgroundColor: "transparent"
         }
+    },
+    menuLogout: {
+        textDecoration: "none"
     }
 });
 
@@ -97,7 +101,7 @@ class NavBar extends Component{
                             </Grid>
                             <Grid item className={ classes.grow }>
                                 { this.props.loggedIn ? 
-                                    <a href="/auth/logout">
+                                    <a href="/auth/logout" className={ classes.menuLogout }>
                                         <Button variant="contained" className={ classes.logoutBtn }>
                                             Logout
                                         </Button>
@@ -125,7 +129,7 @@ class NavBar extends Component{
                                     Meal Planner
                                 </MenuItem>
                                 { this.props.loggedIn ? 
-                                    <a href="/auth/logout">
+                                    <a href="/auth/logout" className={ classes.menuLogout }>
                                         <MenuItem onClick={ this.handleClose }>
                                             Logout
                                         </MenuItem>
