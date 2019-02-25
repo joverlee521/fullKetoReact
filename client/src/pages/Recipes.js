@@ -98,7 +98,7 @@ class Recipes extends Component {
 	}
 
 	render(){
-		const { classes, loggedIn } = this.props
+		const { classes, loggedIn, user } = this.props
 		return (
 			<Grid container direction="column" className="container">
 				<div ref={ this.myRef }></div>
@@ -113,7 +113,7 @@ class Recipes extends Component {
 					<div>
 						<Grid container item className={ classes.recipeDisplay }>
 							{this.state.recipes[(this.state.page - 1)].map(recipe => {
-								return <RecipeCard key={ recipe.recipe.uri } recipe={ recipe.recipe } loggedIn={ loggedIn }/>
+								return <RecipeCard key={ recipe.recipe.uri } recipe={ recipe.recipe } loggedIn={ loggedIn } user={ user }/>
 							})}
 						</Grid> 
 						<Pagination pages={ this.state.recipes.length } changePage={ this.changePage }/>

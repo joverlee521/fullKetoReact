@@ -16,5 +16,11 @@ export default {
     },
     updateUser: function(id, data){
         return axios.put("/api/user/" + id, data);
+    },
+    saveExternalRecipe: function(data){
+        return axios.post("/api/externalRecipes", data);
+    },
+    deleteExternalRecipe: function(userId, recipeUri){
+        return axios.delete(`/api/externalRecipes/${userId}/${recipeUri}`);
     }
 };

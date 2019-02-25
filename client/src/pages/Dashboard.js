@@ -17,7 +17,7 @@ class Dashboard extends Component{
     }
 
     changeUsername = () => {
-        API.updateUser("2", {favoriteEdamamRecipe: "jojo"})
+        API.updateUser("1", {username: "jojo"})
         .then(res => console.log(res))
         .catch(err => console.log(err));
     }
