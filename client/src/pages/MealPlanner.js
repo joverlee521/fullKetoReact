@@ -18,23 +18,19 @@ class MealPlanner extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			user: {}
+			
 		}
 	}
 
-	componentDidMount(){
-		this.setState({ user: this.props.user });
-	}
-
 	render(){
-		const { classes, loggedIn } = this.props;
+		const { classes, loggedIn, user } = this.props;
 		return (
 			<Grid container direction="column" className="container">
 				<Banner title="Meal Planner"/>
 				<Grid container item  className={ classes.content } justify="center" alignContent="center">
 					{ loggedIn ? 
 						<Grid item>
-							<Typography variant="h4" color="inherit">Calendar Coming Soon!</Typography>
+							<Typography variant="h4" color="inherit">{ user.username }'s Calendar Coming Soon!</Typography>
 						</Grid>
 						: <Grid item> 
 							<Typography variant="h4" color="inherit">Please sign in to see your personal meal planner</Typography>

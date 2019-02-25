@@ -13,6 +13,16 @@ module.exports = function(sequelize, DataTypes){
         googleId: {
             type: DataTypes.TEXT,
             allowNull: false
+        },
+        favoriteEdamamRecipes: {
+            type: DataTypes.TEXT,
+            defaultValue: "",
+            get(){
+                return this.getDataValue("favoriteEdamamRecipes").split(";");
+            },
+            set(val){
+                return this.setDataValue("favoriteEdamamRecipes", val.join(";"));
+            }
         }
     });
 

@@ -18,7 +18,7 @@ const strategy = new GoogleStrategy(
 			defaults: {
 				username: name.givenName
 			}
-		}).spread(function(user, created){
+		}).spread((user, created) => {
 			return done(null, user);
 		});
 	}

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Grid, Card, CardMedia, CardContent, CardActions, 
     Button, Typography, Divider, 
     ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, 
+    Icon, IconButton,
     withStyles } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 
@@ -17,12 +18,14 @@ const styles = {
         justifyContent: "center",
         alignItems: "center",
         textAlign: "center",
-        height: "100%"
+        height: "100%",
+        position: "relative"
     },
     recipeImage: {
         width: "100%",
         flex: "1 1 400px",
-        backgroundSize: "contain"
+        backgroundSize: "auto 100%",
+        borderBottom: "1px solid rgba(0,0,0,0.08)"
     },
     cardContent: {
         flex: "1 0 auto",
@@ -42,29 +45,49 @@ const styles = {
         boxShadow: "none !important"
     },
     panelSummary: {
-        alignSelf: "center"
+        alignSelf: "stretch"
     },
-    title: {
-        padding: "0px !important"
+    panelSumContent: {
+        alignItems: "center",
+        justifyContent: "space-evenly"
     },
     panelDetails: {
         flexDirection: "column"
+    },
+    favoriteBtn: {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        backgroundColor: orange[800],
+        color: "#fff",
+        margin: 5,
+        "&:hover": {
+            backgroundColor: orange[200],
+            color: orange[900]
+        }
     }
 };
 
 function RecipeCard(props){
-    const { classes, recipe } = props;
+    const { classes, recipe, loggedIn } = props;
     const totalCarb = Math.floor(recipe.totalNutrients.CHOCDF.quantity / recipe.yield);
-    const fiber = Math.floor(recipe.totalNutrients.FIBTG.quantity / recipe.yield);
+    let fiber;
+    if(recipe.totalNutrients.FIBTG){
+        fiber = Math.floor(recipe.totalNutrients.FIBTG.quantity / recipe.yield);
+    } 
+    else{
+        fiber = 0;
+    }
     const netCarb = totalCarb - fiber;
     return(
         <Grid item xs={ 12 } sm={ 6 } md={ 4 } lg={ 3 } className={ classes.container }>
             <Card className={ classes.card }>
                 <CardMedia image={ recipe.image } className={ classes.recipeImage }/>
+                { loggedIn && <IconButton className={ classes.favoriteBtn }><Icon>favorite_border</Icon></IconButton> }
                 <CardContent className={ classes.cardContent }>
                     <ExpansionPanel className={ classes.expansion }>
-                        <ExpansionPanelSummary classes={ { root: classes.panelSummary } }>
-                            <Typography variant="title" className={ classes.title }>{ recipe.label }</Typography>
+                        <ExpansionPanelSummary classes={{ root: classes.panelSummary, content: classes.panelSumContent }} expandIcon={<Icon>expand_more</Icon>}>
+                            <Typography variant="title">{ recipe.label }</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails className={ classes.panelDetails }>
                             <Typography variant="title">Nutrition Facts</Typography>

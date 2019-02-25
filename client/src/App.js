@@ -52,7 +52,8 @@ class App extends Component {
 					<Route exact path="/" 
 						render={ props => this.state.loggedIn ? <Dashboard {...props} user={ this.state.user }/> : <Home/> }/>
 					<Route exact path="/isitketo" component= { IsItKeto } />
-					<Route exact path="/recipes" component= { Recipes } />
+					<Route exact path="/recipes" 
+						render={ props => <Recipes {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>}/>
 					<Route exact path="/mealplanner" 
 						render={ props => <MealPlanner {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>} />
 					<Footer/>

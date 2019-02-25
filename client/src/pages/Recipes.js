@@ -6,6 +6,7 @@ import Banner from "../components/Banner";
 import SearchBar from "../components/SearchBar";
 import RecipeCard from "../components/RecipeCard";
 import Pagination from "../components/Pagination";
+import ProgressCircle from "../components/Progress";
 import ErrorModal from "../components/ErrorModal";
 import API from "../utils/API";
 import "./pages.css";
@@ -37,13 +38,14 @@ class Recipes extends Component {
 			recipes: [],
 			page: 1,
 			error: false,
-			errorMessage: ""
+			errorMessage: "",
+			searching: false
 		}
 		this.myRef = React.createRef();
 	}
 
 	searchRecipes = input => {
-		this.setState({ recipes: [], error: false }, () => {
+		this.setState({ recipes: [], error: false, searching: true }, () => {
 			API.getEdamamRecipes(input)
 				.then(res => this.setRecipeState(res))
 				.catch(err => this.setErrorState(err));
@@ -51,7 +53,7 @@ class Recipes extends Component {
 	}
 
 	getRandomRecipes = () => {
-		this.setState({ recipes: [], error: false }, () => {
+		this.setState({ recipes: [], error: false, searching: true }, () => {
 			API.getRandomRecipes()
 				.then(res => this.setRecipeState(res))
 				.catch(err => this.setErrorState(err));
@@ -61,7 +63,7 @@ class Recipes extends Component {
 	setRecipeState = result => {
 		let recipes = result.data.hits;
 		const recipeState = this.createSubArrays(recipes);
-		this.setState({ recipes: recipeState, page: 1 });
+		this.setState({ recipes: recipeState, page: 1, searching: false });
 	}
 
 	createSubArrays = array => {
@@ -82,9 +84,9 @@ class Recipes extends Component {
 
 	setErrorState = error => {
 		if(error.response.status === 404){
-			return this.setState({ recipes: [], error: true, errorMessage: error.response.data });
+			return this.setState({ recipes: [], error: true, errorMessage: error.response.data, searching: false });
 		}
-		return this.setState({ recipes: [], error: true, errorMessage: "Something went wrong! Please try again!" });
+		return this.setState({ recipes: [], error: true, errorMessage: "Something went wrong! Please try again!", searching: false });
 	}
 
 	changePage = newPage => {
@@ -96,7 +98,7 @@ class Recipes extends Component {
 	}
 
 	render(){
-		const { classes } = this.props
+		const { classes, loggedIn } = this.props
 		return (
 			<Grid container direction="column" className="container">
 				<div ref={ this.myRef }></div>
@@ -111,12 +113,13 @@ class Recipes extends Component {
 					<div>
 						<Grid container item className={ classes.recipeDisplay }>
 							{this.state.recipes[(this.state.page - 1)].map(recipe => {
-								return <RecipeCard key={ recipe.recipe.uri } recipe={ recipe.recipe } />
+								return <RecipeCard key={ recipe.recipe.uri } recipe={ recipe.recipe } loggedIn={ loggedIn }/>
 							})}
 						</Grid> 
 						<Pagination pages={ this.state.recipes.length } changePage={ this.changePage }/>
 					</div>
 				}
+				{ this.state.searching && <ProgressCircle /> }
 				<ErrorModal open={ this.state.error } message={ this.state.errorMessage } />
 			</Grid>
 		);

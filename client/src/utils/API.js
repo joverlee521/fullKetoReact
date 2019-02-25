@@ -13,5 +13,8 @@ export default {
     },
     getRandomRecipes: function(){
         return axios.get("/api/external/edamam/random");
+    },
+    updateUser: function(id, data){
+        return axios.put("/api/user/" + id, data);
     }
 };
