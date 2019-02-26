@@ -7,7 +7,6 @@ import { Grid, Card, CardMedia, CardContent, CardActions,
     withStyles } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import API from "../utils/API";
-import { resolve } from "dns";
 
 const styles = {
     container: {

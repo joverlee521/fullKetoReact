@@ -35,6 +35,7 @@ class SearchBar extends Component{
         }
     };
 
+    // TODO: Delete input when `Get Random Recipes` Button is clicked
     handleInput = event => {
         const { name, value } = event.target;
         this.setState({
