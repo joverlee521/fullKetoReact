@@ -14,6 +14,9 @@ export default {
     getRandomRecipes: function(){
         return axios.get("/api/external/edamam/random");
     },
+    getFavoriteRecipes: function(id){
+        return axios.get("/api/externalRecipes/" + id);
+    },
     updateUser: function(id, data){
         return axios.put("/api/user/" + id, data);
     },

@@ -4,6 +4,9 @@ const externalRecipeController = require("../../controllers/externalRecipeContro
 router.route("/")
     .post(externalRecipeController.saveRecipe);
 
+router.route("/:userId")
+    .get(externalRecipeController.getSavedRecipes);
+
 router.route("/:userId/:recipeUri")
     .delete(externalRecipeController.deleteRecipe);
     

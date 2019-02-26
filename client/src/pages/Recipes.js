@@ -8,6 +8,7 @@ import RecipeCard from "../components/RecipeCard";
 import Pagination from "../components/Pagination";
 import ProgressCircle from "../components/Progress";
 import ErrorModal from "../components/ErrorModal";
+import HelperMethods from "../utils/helperMethods";
 import API from "../utils/API";
 import "./pages.css";
 
@@ -62,24 +63,8 @@ class Recipes extends Component {
 
 	setRecipeState = result => {
 		let recipes = result.data.hits;
-		const recipeState = this.createSubArrays(recipes);
+		const recipeState = HelperMethods.createSubArrays(recipes, 12);
 		this.setState({ recipes: recipeState, page: 1, searching: false });
-	}
-
-	createSubArrays = array => {
-		const newArray = [];
-		// Separating the returned array into smaller subarrays to make pagination easier
-		// Continue splicing the original returned array until it has a length of 12 or less
-		while(array.length > 12){
-			// Each subarray has a length of 12
-			let subArray = array.splice(0, 12);
-			newArray.push(subArray);
-		}
-		// If the original array has any left over recipes, push it into the new array as well
-		if(array.length > 0){
-			newArray.push(array);
-		}
-		return newArray;
 	}
 
 	setErrorState = error => {
@@ -111,7 +96,7 @@ class Recipes extends Component {
                 </Grid>
 				{ this.state.recipes.length > 0 && 
 					<div>
-						<Grid container item className={ classes.recipeDisplay }>
+						<Grid container item justify="center" className={ classes.recipeDisplay }>
 							{this.state.recipes[(this.state.page - 1)].map(recipe => {
 								return <RecipeCard key={ recipe.recipe.uri } recipe={ recipe.recipe } loggedIn={ loggedIn } user={ user }/>
 							})}

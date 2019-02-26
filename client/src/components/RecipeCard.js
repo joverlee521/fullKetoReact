@@ -133,7 +133,11 @@ class RecipeCard extends Component{
         user.favoriteEdamamRecipes.splice(index, 1);
         const recipeUri = recipe.uri.split("_");
         Promise.all([API.updateUser(user.id, { favoriteEdamamRecipes: user.favoriteEdamamRecipes }), API.deleteExternalRecipe(user.id, recipeUri[1])])
-        .then(() => this.setState({ favorite: false }))
+        .then(() => this.setState({ favorite: false }, () => {
+            if(this.props.updateRecipes){
+                this.props.updateRecipes();
+            }
+        }))
         .catch(err => console.log(err));
     }
 
