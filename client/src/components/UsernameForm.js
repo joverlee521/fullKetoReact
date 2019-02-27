@@ -29,6 +29,9 @@ const styles = {
     },
     formBtn: {
         margin: 10
+    },
+    saveBtn: {
+        backgroundColor: "green"
     }
 };
 
@@ -78,8 +81,8 @@ class UsernameForm extends Component {
                             <Grid item xs={ 12 } md={ 6 }>
                                 <TextField value={ this.state.input } fullWidth variant="outlined" onChange={ this.handleChange }/>
                             </Grid>
-                            <Button variant="contained" className={ classes.formBtn } onClick={ this.saveUsername }>Save</Button>
-                            <Button variant="contained" className={ classes.formBtn } onClick={ this.cancelEdit }>Cancel</Button>
+                            <Button variant="contained" className={ classNames(classes.formBtn, classes.saveBtn) } onClick={ this.saveUsername } color="primary">Save</Button>
+                            <Button variant="contained" className={ classes.formBtn } onClick={ this.cancelEdit } color="secondary">Cancel</Button>
                         </Grid>
                         : <Grid container item>
                             <Typography variant="h6">{ this.state.user.username }</Typography>
