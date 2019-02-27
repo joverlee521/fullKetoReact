@@ -15,7 +15,7 @@ module.exports = {
                     if(rows > 0){
                         db.User.findOne({
                             where: { id: id },
-                            attributes: ["username", "favoriteEdamamRecipes"]
+                            attributes: ["id","username", "favoriteEdamamRecipes"]
                         }).then(user => res.json(user))
                             .catch(error => res.status(500).json(error));
                     }

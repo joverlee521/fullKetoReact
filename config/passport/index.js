@@ -12,8 +12,12 @@ passport.serializeUser((user, done) => {
 // This method is called all subsequent requests to load the user info from session
 passport.deserializeUser((id, done) => {
 	console.log('Deserialize ... called')
-	User.findById(id)
-		.then(user => {
+	User.findOne({
+		where: {
+			id: id
+		},
+		attributes: ["id", "username", "favoriteEdamamRecipes"]
+	}).then(user => {
 			console.log('======= DESERIALIZE USER CALLED ======');
 			done(null, user);
 		})

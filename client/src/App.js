@@ -42,6 +42,10 @@ class App extends Component {
 			});
 	}
 
+	updateUser = newUserInfo => {
+		this.setState({ user: newUserInfo });
+	}
+
 	render() {
 		const { classes } = this.props;
 	  	return (
@@ -50,7 +54,7 @@ class App extends Component {
 	  	  	  	  	<NavBar loggedIn={ this.state.loggedIn }/>
 					<div className={ classes.spacer }></div>
 					<Route exact path="/" 
-						render={ props => this.state.loggedIn ? <Dashboard {...props} user={ this.state.user }/> : <Home/> }/>
+						render={ props => this.state.loggedIn ? <Dashboard {...props} user={ this.state.user } updateUser={ this.updateUser }/> : <Home/> }/>
 					<Route exact path="/isitketo" component= { IsItKeto } />
 					<Route exact path="/recipes" 
 						render={ props => <Recipes {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>}/>

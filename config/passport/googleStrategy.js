@@ -15,6 +15,7 @@ const strategy = new GoogleStrategy(
 			where: {
 				googleId: id
 			},
+			attributes: ["id", "username", "favoriteEdamamRecipes"],
 			defaults: {
 				username: name.givenName
 			}
