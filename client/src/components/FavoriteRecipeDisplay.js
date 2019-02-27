@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Grid, withStyles, Typography } from "@material-ui/core";
 import RecipeCard from "./RecipeCard";
+import Pagination from "./Pagination";
 import HelperMethods from "../utils/helperMethods";
 import API from "../utils/API";
 
@@ -23,15 +24,36 @@ class FavoriteRecipeDisplay extends Component{
 
     componentWillMount(){
         API.getFavoriteRecipes(this.props.user.id)
-        .then(res => this.setState({ recipes: res.data }))
+        .then(res => {
+            const recipeState = HelperMethods.createSubArrays(res.data, 8);
+            this.setState({ recipes: recipeState });
+        })
         .catch(err => console.log(err));
     }
 
     updateRecipes = (id) => {
         let currentRecipes = this.state.recipes;
+        // Find index of selected recipe within subArrays
         const index = currentRecipes.map(recipe => recipe.id).indexOf(id);
-        currentRecipes.splice(index, 1);
-        this.setState({ recipe: currentRecipes });
+        // Remove selected recipes from subArray
+        currentRecipes[(this.state.page - 1)].splice(index, 1);
+        // If the subarray is now empty, remove the subarray from the array
+        // Set the page state to previous page
+        if(currentRecipes[(this.state.page - 1)].length === 0){
+            currentRecipes.splice((this.state.page -1), 1);
+            this.setState({ page: this.state.page - 1 });
+        }
+        // If the array is completely empty, set the recipes state to an empty array
+        if(currentRecipes.length === 1 && currentRecipes[0].length === 0){
+            this.setState({ recipes: [] });
+        }
+        else{
+            this.setState({ recipes: currentRecipes });
+        }
+    }
+
+    changePage = newPage => {
+        this.setState({  page: newPage });
     }
 
     render(){
@@ -39,9 +61,10 @@ class FavoriteRecipeDisplay extends Component{
         return(
             { ...this.state.recipes.length > 0 ? 
             <Grid container item justify="center" className={ classes.container }>
-                { this.state.recipes.map(recipe => {
+                { this.state.recipes[(this.state.page - 1)].map(recipe => {
                     return( <RecipeCard key={ recipe.id } recipe={ recipe } loggedIn={ true } user={ user } updateRecipes={ () => this.updateRecipes(recipe.id)}/>)
                 })}
+                <Pagination pages={ this.state.recipes.length } changePage={ this.changePage }/>
             </Grid>
             : <Grid container item justify="center" alignItems="center" className={ classes.container }>
                 <Typography variant="h6">No Favorite Recipes</Typography>
