@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const userController = require("../../controllers/usersController");
+const recipeController = require("../../controllers/recipeController");
 
 router.route("/:id")
-    .put(userController.checkAuth, userController.update)
-    .delete(userController.checkAuth, userController.delete);
+    .delete(userController.checkAuth, recipeController.deleteUserRecipes);
 
 module.exports = router;

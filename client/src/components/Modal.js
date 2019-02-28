@@ -11,8 +11,8 @@ const styles = {
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        width: 350,
-        height: "25%",
+        width: "50%",
+        height: "50%",
         padding: "15px 20px",
         textAlign: "center",
         display: "flex",
@@ -34,7 +34,7 @@ const styles = {
     }
 };
 
-class ErrorModal extends Component{
+class MyModal extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -53,16 +53,20 @@ class ErrorModal extends Component{
     }
 
     closeModal = () =>{
-        this.setState({ open: false });
+        this.setState({ open: false }, () => {
+            if(this.props.close){
+                this.props.close();
+            }
+        });
     }
 
     render(){
-        const { classes, message } = this.props;
+        const { classes, title, message, closeBtn } = this.props;
         return(
             <Modal open={ this.state.open } onClose={ this.closeModal } BackdropProps={{ className: classes.backdrop }}>
                 <Paper className={ classes.modalContent }>
                     <Grid container item justify="center">
-                        <Typography variant="h5" gutterBottom>Error</Typography>
+                        <Typography variant="h5" gutterBottom>{ title }</Typography>
                         <IconButton onClick={ this.closeModal } className={ classes.closeButton }>
                             <Icon>clear</Icon>
                         </IconButton>
@@ -70,8 +74,10 @@ class ErrorModal extends Component{
                     <Grid item>
                         <Typography variant="h6">{ message }</Typography>
                     </Grid> 
-                    <Grid item>
-                        <Button variant="contained" color="secondary" onClick={ this.closeModal }>Close</Button>
+                    <Grid container item justify="space-evenly">
+                        { this.props.firstBtn && <Button variant="contained" onClick={ this.props.firstFunc }>{ this.props.firstBtn }</Button>}
+                        { this.props.secondBtn && <Button variant="contained" onClick={ this.props.secondFunc }>{ this.props.secondBtn }</Button>}
+                        <Button variant="contained" color="secondary" onClick={ this.closeModal }>{ closeBtn }</Button>
                     </Grid>
                 </Paper>
             </Modal>
@@ -79,8 +85,8 @@ class ErrorModal extends Component{
     }
 }
 
-ErrorModal.propTypes = {
+MyModal.propTypes = {
     classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(ErrorModal);
+export default withStyles(styles)(MyModal);

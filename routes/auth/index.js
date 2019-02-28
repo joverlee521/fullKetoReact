@@ -7,6 +7,7 @@ const User = require("../../models/user");
 // Once succesful, redirects to callback URL
 router.get("/login", (req, res, next) => {
     req.session.previous_url = req.headers.referer;
+    console.log(req.session.previous_url);
     passport.authenticate("google", { scope: ["profile"]})(req, res, next);
 });
 
@@ -34,8 +35,11 @@ router.get("/logout", (req, res) => {
     if(req.user){
         req.session.destroy();
         res.clearCookie("connect.sid") // clean up!
+        res.sendStatus(200);
     }
-    res.redirect("/");
+    else{
+        res.sendStatus(401);
+    }
 });
 
 module.exports = router;

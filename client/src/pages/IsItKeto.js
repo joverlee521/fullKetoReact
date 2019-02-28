@@ -4,7 +4,7 @@ import Banner from "../components/Banner";
 import SearchBar from "../components/SearchBar";
 import FoodItemCard from "../components/FoodItemCard";
 import ProgressCircle from "../components/Progress";
-import ErrorModal from "../components/ErrorModal";
+import Modal from "../components/Modal";
 import API from "../utils/API";
 import "./pages.css";
 
@@ -38,7 +38,7 @@ class IsItKeto extends Component {
 				<SearchBar placeholder="Search food items" search={this.searchInput}/>
 				{ this.state.foodResult !== null && <FoodItemCard foodObj={ this.state.foodResult }/> }
 				{ this.state.searching && <ProgressCircle /> }
-				<ErrorModal open={ this.state.error } message={ this.state.errorMessage }/>
+				<Modal open={ this.state.error } title="ERROR" message={ this.state.errorMessage } closeBtn="Close"/>
 			</Grid>
 		);
 	}

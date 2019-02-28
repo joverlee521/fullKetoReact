@@ -7,7 +7,7 @@ import SearchBar from "../components/SearchBar";
 import RecipeCard from "../components/RecipeCard";
 import Pagination from "../components/Pagination";
 import ProgressCircle from "../components/Progress";
-import ErrorModal from "../components/ErrorModal";
+import Modal from "../components/Modal";
 import HelperMethods from "../utils/helperMethods";
 import API from "../utils/API";
 import "./pages.css";
@@ -105,7 +105,7 @@ class Recipes extends Component {
 					</div>
 				}
 				{ this.state.searching && <ProgressCircle /> }
-				<ErrorModal open={ this.state.error } message={ this.state.errorMessage } />
+				<Modal open={ this.state.error } title="ERROR" message={ this.state.errorMessage } closeBtn="Close"/>
 			</Grid>
 		);
 	}

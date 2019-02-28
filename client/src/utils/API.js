@@ -14,16 +14,28 @@ export default {
     getRandomRecipes: function(){
         return axios.get("/api/external/edamam/random");
     },
-    getFavoriteRecipes: function(id){
-        return axios.get("/api/externalRecipes/" + id);
+    getFavoriteRecipes: function(userId){
+        return axios.get("/api/externalRecipes/" + userId);
     },
-    updateUser: function(id, data){
-        return axios.put("/api/user/" + id, data);
+    updateUser: function(userId, data){
+        return axios.put("/api/user/" + userId, data);
     },
     saveExternalRecipe: function(data){
         return axios.post("/api/externalRecipes", data);
     },
     deleteExternalRecipe: function(userId, recipeUri){
         return axios.delete(`/api/externalRecipes/${userId}/${recipeUri}`);
+    },
+    deleteUser: function(userId){
+        return axios.delete("/api/user/" + userId);
+    },
+    deleteAllUserFavoriteRecipes: function(userId){
+        return axios.delete("/api/externalRecipes/" + userId);
+    },
+    deleteAllUserRecipes: function(userId){
+        return axios.delete("/api/recipes/" + userId);
+    },
+    logout: function(){
+        return axios.get("/auth/logout");
     }
 };

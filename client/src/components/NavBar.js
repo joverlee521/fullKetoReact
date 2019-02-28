@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { AppBar, Toolbar, Typography, Button, withStyles, Grid, Hidden, IconButton, Icon, Menu, MenuItem } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import GoogleSignInButton from "./GoogleSignInButton";
+import API from "../utils/API";
 
 const styles = theme => ({
     appBar: {
@@ -63,6 +64,11 @@ class NavBar extends Component{
         this.setState({ anchorEl: null });
     }
 
+    logout = () => {
+        API.logout().then(() => window.location.reload())
+        .catch(error => console.log(error));
+    }
+
     render(){
         const { classes } = this.props;
         const { anchorEl } = this.state;
@@ -101,11 +107,9 @@ class NavBar extends Component{
                             </Grid>
                             <Grid item className={ classes.grow }>
                                 { this.props.loggedIn ? 
-                                    <a href="/auth/logout" className={ classes.menuLogout }>
-                                        <Button variant="contained" className={ classes.logoutBtn }>
+                                        <Button variant="contained" className={ classes.logoutBtn } onClick={ this.logout }>
                                             Logout
                                         </Button>
-                                    </a>
                                     : <GoogleSignInButton width="160px" />
                                 }
                             </Grid>
@@ -129,11 +133,9 @@ class NavBar extends Component{
                                     Meal Planner
                                 </MenuItem>
                                 { this.props.loggedIn ? 
-                                    <a href="/auth/logout" className={ classes.menuLogout }>
-                                        <MenuItem onClick={ this.handleClose }>
+                                        <MenuItem onClick={ this.logout }>
                                             Logout
                                         </MenuItem>
-                                    </a>
                                     : <MenuItem onClick={ this.handleClose } className={ classes.menuSignIn }>
                                         <GoogleSignInButton width="160px" />
                                     </MenuItem>

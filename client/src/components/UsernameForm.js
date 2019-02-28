@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Grid, IconButton, Icon, Button, Typography, TextField, withStyles } from "@material-ui/core";
+import { deepOrange, green } from "@material-ui/core/colors";
 import API from "../utils/API";
 
 const styles = {
@@ -20,18 +21,31 @@ const styles = {
     },
     editBtn: {
         padding: "0px 5px",
-        marginLeft: 10
+        marginLeft: 10,
+        color: deepOrange[900],
+        "&:hover": {
+            color: "#fff",
+            backgroundColor: deepOrange[900]
+        }
+    },
+    formContainer: {
+        display: "flex"
     },
     form: {
         position: "relative",
         top: 20,
-        justifyContent: "center"
+        justifyContent: "center",
+        display: "flex",
+        padding: "10px 0px"
     },
     formBtn: {
         margin: 10
     },
     saveBtn: {
-        backgroundColor: "green"
+        backgroundColor: green[600],
+        "&:hover": {
+            backgroundColor: green[900]
+        }
     }
 };
 
@@ -75,7 +89,7 @@ class UsernameForm extends Component {
                 <Grid item xs={ this.state.edit ? 12 : 6 } className={ classNames(classes.label, { [classes.editLabel]: this.state.edit }) }>
                     <Typography variant="h6">Username: </Typography>
                 </Grid>
-                <Grid item xs={ this.state.edit ? 8 : 6 } >
+                <Grid item xs={ this.state.edit ? 8 : 6 } className={ classes.formContainer }>
                     { this.state.edit ? 
                         <Grid container item component="form" className={ classes.form }>
                             <Grid item xs={ 12 } md={ 6 }>
