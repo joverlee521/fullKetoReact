@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 import { Modal, Paper, Grid, Icon, IconButton, Button, Typography, withStyles } from "@material-ui/core";
+import { deepOrange, green, indigo } from "@material-ui/core/colors";
 
-const styles = {
+const styles = theme => ({
     backdrop: {
         backgroundColor: "rgba(0,0,0,0.8)"
     },
@@ -11,19 +13,21 @@ const styles = {
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        width: "50%",
-        height: "50%",
-        padding: "15px 20px",
+        width: "75%",
+        padding: "30px 20px",
         textAlign: "center",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
         alignContent: "center",
         "&:focus": {
             outline: "none"
+        },
+        [theme.breakpoints.up("md")]: {
+            width: "50%"
         }
     },
-    closeButton: { 
+    closeBtn: { 
         fontSize: "0.8em",
         position: "absolute",
         top: 0,
@@ -31,8 +35,42 @@ const styles = {
         "&:hover": {
             backgroundColor: "inherit"
         }
+    },
+    modalMessage: {
+        padding: 10
+    },
+    modalBtn: {
+        margin: 5, 
+        padding: 0,
+        width: "30%",
+        color: "#fff",
+        [theme.breakpoints.up("sm")]: {
+            padding: 5
+        }
+    },
+    btnContainer: {
+        padding: "20px 0px",
+
+    },
+    firstBtn: {
+        backgroundColor: deepOrange[600],
+        "&:hover": {
+            backgroundColor: deepOrange[900]
+        }
+    },
+    secondBtn: {
+        backgroundColor: green[600],
+        "&:hover": {
+            backgroundColor: green[900]
+        }
+    },
+    bigCloseBtn: {
+        backgroundColor: indigo[600],
+        "&:hover": {
+            backgroundColor: indigo[900]
+        }
     }
-};
+});
 
 class MyModal extends Component{
     constructor(props){
@@ -67,17 +105,17 @@ class MyModal extends Component{
                 <Paper className={ classes.modalContent }>
                     <Grid container item justify="center">
                         <Typography variant="h5" gutterBottom>{ title }</Typography>
-                        <IconButton onClick={ this.closeModal } className={ classes.closeButton }>
+                        <IconButton onClick={ this.closeModal } className={ classes.closeBtn }>
                             <Icon>clear</Icon>
                         </IconButton>
                     </Grid>
-                    <Grid item>
+                    <Grid item className={ classes.modalMessage }>
                         <Typography variant="h6">{ message }</Typography>
                     </Grid> 
-                    <Grid container item justify="space-evenly">
-                        { this.props.firstBtn && <Button variant="contained" onClick={ this.props.firstFunc }>{ this.props.firstBtn }</Button>}
-                        { this.props.secondBtn && <Button variant="contained" onClick={ this.props.secondFunc }>{ this.props.secondBtn }</Button>}
-                        <Button variant="contained" color="secondary" onClick={ this.closeModal }>{ closeBtn }</Button>
+                    <Grid container item justify="space-evenly" className={ classes.btnContainer }>
+                        { this.props.firstBtn && <Button variant="contained" className={ classNames(classes.modalBtn, classes.firstBtn) } onClick={ this.props.firstFunc }>{ this.props.firstBtn }</Button>}
+                        { this.props.secondBtn && <Button variant="contained" className={ classNames(classes.modalBtn, classes.secondBtn) } onClick={ this.props.secondFunc }>{ this.props.secondBtn }</Button>}
+                        <Button variant="contained" color="secondary" className={ classNames(classes.modalBtn, classes.bigCloseBtn) } onClick={ this.closeModal }>{ closeBtn }</Button>
                     </Grid>
                 </Paper>
             </Modal>
