@@ -46,7 +46,14 @@ const styles = {
         "&:hover": {
             backgroundColor: green[900]
         }
-    }
+    },
+    focused: {},
+    notchedOutline: {},
+    cssOutlinedInput: {
+        '&$focused $notchedOutline': {
+          borderColor: deepOrange[900],
+        },
+      },
 };
 
 class UsernameForm extends Component {
@@ -93,7 +100,15 @@ class UsernameForm extends Component {
                     { this.state.edit ? 
                         <Grid container item component="form" className={ classes.form }>
                             <Grid item xs={ 12 } md={ 6 }>
-                                <TextField value={ this.state.input } fullWidth variant="outlined" onChange={ this.handleChange }/>
+                                <TextField value={ this.state.input } fullWidth variant="outlined" onChange={ this.handleChange } 
+                                    InputProps={{
+                                        classes: {
+                                          root: classes.cssOutlinedInput,
+                                          focused: classes.focused,
+                                          notchedOutline: classes.notchedOutline,
+                                        },
+                                    }}
+                                />
                             </Grid>
                             <Button variant="contained" className={ classNames(classes.formBtn, classes.saveBtn) } onClick={ this.saveUsername } color="primary">Save</Button>
                             <Button variant="contained" className={ classes.formBtn } onClick={ this.cancelEdit } color="secondary">Cancel</Button>
