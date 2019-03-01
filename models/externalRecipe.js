@@ -3,7 +3,7 @@
 module.exports = function(sequelize, DataTypes){
 
     const ExternalRecipe = sequelize.define("ExternalRecipe", {
-        label: {
+        title: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -11,16 +11,28 @@ module.exports = function(sequelize, DataTypes){
             type: DataTypes.STRING,
             allowNull: true
         },
-        yield: {
+        serving: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
         calories: {
-            type: DataTypes.DECIMAL,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
-        totalNutrients: {
-            type: DataTypes.JSON,
+        fat: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        protein: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        carbs: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        fiber: {
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         source: {

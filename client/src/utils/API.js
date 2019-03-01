@@ -17,6 +17,9 @@ export default {
     getFavoriteRecipes: function(userId){
         return axios.get("/api/externalRecipes/" + userId);
     },
+    getUserRecipes: function(userId){
+        return axios.get("/api/recipes/" + userId);
+    },
     updateUser: function(userId, data){
         return axios.put("/api/user/" + userId, data);
     },

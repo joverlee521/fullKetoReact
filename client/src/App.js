@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import IsItKeto from "./pages/IsItKeto";
 import Recipes from "./pages/Recipes";
 import MealPlanner from "./pages/MealPlanner";
+import AddRecipe from "./pages/AddRecipe";
 import Footer from "./components/Footer";
 import "./App.css";
 
@@ -60,6 +61,8 @@ class App extends Component {
 						render={ props => <Recipes {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>}/>
 					<Route exact path="/mealplanner" 
 						render={ props => <MealPlanner {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>} />
+					<Route exact path="/addRecipe"
+						render={ props => <AddRecipe {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>} />
 					<Footer/>
 	  	  	  	</div>
 	  	  	</Router>

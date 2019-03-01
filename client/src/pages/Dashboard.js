@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Grid, Paper, Typography, Icon, Tabs, Tab, withStyles } from "@material-ui/core";
+import { Grid, Paper, Icon, Tabs, Tab, withStyles } from "@material-ui/core";
 import { deepOrange } from "@material-ui/core/colors";
 import Banner from "../components/Banner";
 import UsernameForm from "../components/UsernameForm";
 import DeleteAccountBtn from "../components/DeleteAccountBtn";
 import FavoriteRecipeDisplay from "../components/FavoriteRecipeDisplay";
+import UserRecipes from "../components/UserRecipes";
 import Modal from "../components/Modal";
 import API from "../utils/API";
 
@@ -72,7 +73,7 @@ class Dashboard extends Component{
                     </Grid>
                 }
                 { this.state.value === 1 &&  <FavoriteRecipeDisplay user={ user }/> }
-                { this.state.value === 2 &&  <Typography>My Recipes</Typography> }
+                { this.state.value === 2 &&  <UserRecipes user={ user }/> }
                 <Modal open={ this.state.openModal } 
                     title="Are You Sure?" 
                     message="We are very sorry to see you go! Do you want to delete all of your recipes as well or keep the recipes with an Anonymous author?" 

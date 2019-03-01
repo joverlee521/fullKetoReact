@@ -98,7 +98,7 @@ class Recipes extends Component {
 					<div>
 						<Grid container item justify="center" className={ classes.recipeDisplay }>
 							{this.state.recipes[(this.state.page - 1)].map(recipe => {
-								return <RecipeCard key={ recipe.recipe.uri } recipe={ recipe.recipe } loggedIn={ loggedIn } user={ user }/>
+								return <RecipeCard key={ recipe.recipe.uri } externalRecipe={ recipe.recipe } loggedIn={ loggedIn } user={ user }/>
 							})}
 						</Grid> 
 						<Pagination pages={ this.state.recipes.length } changePage={ this.changePage }/>

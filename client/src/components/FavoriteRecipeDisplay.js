@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Grid, withStyles, Typography } from "@material-ui/core";
+import ProgressCircle from "./Progress";
 import RecipeCard from "./RecipeCard";
 import Pagination from "./Pagination";
 import HelperMethods from "../utils/helperMethods";
@@ -18,7 +19,8 @@ class FavoriteRecipeDisplay extends Component{
         super(props);
         this.state = {
             recipes: [],
-            page: 1
+            page: 1,
+            loading: true
         }
     }
 
@@ -26,7 +28,7 @@ class FavoriteRecipeDisplay extends Component{
         API.getFavoriteRecipes(this.props.user.id)
         .then(res => {
             const recipeState = HelperMethods.createSubArrays(res.data, 8);
-            this.setState({ recipes: recipeState });
+            this.setState({ recipes: recipeState, loading: false });
         })
         .catch(err => console.log(err));
     }
@@ -67,7 +69,10 @@ class FavoriteRecipeDisplay extends Component{
                 <Pagination pages={ this.state.recipes.length } changePage={ this.changePage }/>
             </Grid>
             : <Grid container item justify="center" alignItems="center" className={ classes.container }>
-                <Typography variant="h6">No Favorite Recipes</Typography>
+                {this.state.loading ? 
+                    <ProgressCircle />
+                    :<Typography variant="h6">No Favorite Recipes</Typography>
+                }
             </Grid>
             }
         );

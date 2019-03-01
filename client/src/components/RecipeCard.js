@@ -76,53 +76,60 @@ class RecipeCard extends Component{
             favorite: false, 
             id: null
         }
+        this.recipe = {}
     }
 
     componentWillMount(){
-        const { user, recipe } = this.props;
-        if(user.favoriteEdamamRecipes.indexOf(recipe.uri) >= 0){
-            this.setState({ favorite: true });
+        const { user, recipe, externalRecipe } = this.props;
+        if(externalRecipe){
+            this.extractExternalRecipe(externalRecipe, user);
+            if(user.favoriteEdamamRecipes && user.favoriteEdamamRecipes.indexOf(externalRecipe.uri) >= 0){
+                this.setState({ favorite: true });
+            }
+        }
+        else if(recipe){
+            if(user.favoriteEdamamRecipes && user.favoriteEdamamRecipes.indexOf(recipe.uri) >= 0){
+                this.setState({ favorite: true})
+            }
+            this.recipe = recipe;
         }
     }
 
-    calcCarbs = () => {
-        const { recipe } = this.props;
-        const totalCarb = Math.floor(recipe.totalNutrients.CHOCDF.quantity / recipe.yield);
+    extractExternalRecipe = (externalRecipe, user) => {
         let fiber;
-        if(recipe.totalNutrients.FIBTG){
-            fiber = Math.floor(recipe.totalNutrients.FIBTG.quantity / recipe.yield);
-        } 
+        if(externalRecipe.totalNutrients.FIBTG){
+            fiber = Math.floor(externalRecipe.totalNutrients.FIBTG.quantity / externalRecipe.yield);
+        }
         else{
             fiber = 0;
         }
-        const netCarb = totalCarb - fiber;
-        return ({
-            totalCarb: totalCarb,
+        this.recipe = {
+            title: externalRecipe.label,
+            image: externalRecipe.image,
+            serving: externalRecipe.yield,
+            calories: Math.floor(externalRecipe.calories / externalRecipe.yield),
+            fat: Math.floor(externalRecipe.totalNutrients.FAT.quantity / externalRecipe.yield),
+            protein: Math.floor(externalRecipe.totalNutrients.PROCNT.quantity / externalRecipe.yield),
+            carbs: Math.floor(externalRecipe.totalNutrients.CHOCDF.quantity / externalRecipe.yield),
             fiber: fiber,
-            netCarb: netCarb
-        });
+            source: externalRecipe.source,
+            url: externalRecipe.url,
+            uri: externalRecipe.uri
+        }
+        if(user){
+            this.recipe.UserId = user.id;
+        }
     }
 
     addToFavorites = () => {
-        const { user, recipe } = this.props;
+        const { user } = this.props;
         if(user.favoriteEdamamRecipes.length === 1 && user.favoriteEdamamRecipes[0] === ""){
-            user.favoriteEdamamRecipes = [recipe.uri];
+            user.favoriteEdamamRecipes = [this.recipe.uri];
         }
         else{
-            user.favoriteEdamamRecipes.push(recipe.uri);
+            user.favoriteEdamamRecipes.push(this.recipe.uri);
         }
-        const recipeObj = {
-            label: recipe.label,
-            image: recipe.image,
-            yield: recipe.yield,
-            calories: recipe.calories,
-            totalNutrients: recipe.totalNutrients,
-            source: recipe.source,
-            url: recipe.url,
-            uri: recipe.uri,
-            UserId: user.id
-        }
-        Promise.all([API.updateUser(user.id, { favoriteEdamamRecipes: user.favoriteEdamamRecipes }), API.saveExternalRecipe(recipeObj)])
+        Promise.all([API.updateUser(user.id, { favoriteEdamamRecipes: user.favoriteEdamamRecipes }), API.saveExternalRecipe(this.recipe)])
         .then(res => this.setState({ favorite: true }))
         .catch(err => console.log(err));
     }
@@ -142,35 +149,35 @@ class RecipeCard extends Component{
     }
 
     render(){
-        const { classes, recipe, loggedIn } = this.props;
-        const { totalCarb, fiber, netCarb } = this.calcCarbs();
+        const { classes, loggedIn } = this.props;
+
         return(
             <Grid item xs={ 12 } sm={ 6 } md={ 4 } lg={ 3 } className={ classes.container }>
                 <Card className={ classes.card }>
-                    <CardMedia image={ recipe.image } className={ classes.recipeImage }/>
+                    <CardMedia image={ this.recipe.image } className={ classes.recipeImage }/>
                     { loggedIn && <IconButton onClick={ this.state.favorite ? this.removeFromFavorites : this.addToFavorites } className={ classes.favoriteBtn }><Icon>{ this.state.favorite ? "favorite" : "favorite_border" }</Icon></IconButton> }
                     <CardContent className={ classes.cardContent }>
                         <ExpansionPanel className={ classes.expansion }>
                             <ExpansionPanelSummary classes={{ root: classes.panelSummary, content: classes.panelSumContent }} expandIcon={<Icon>expand_more</Icon>}>
-                                <Typography variant="title">{ recipe.label }</Typography>
+                                <Typography variant="title">{ this.recipe.title }</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails className={ classes.panelDetails }>
                                 <Typography variant="title">Nutrition Facts</Typography>
-                                <Typography variant="subtitle1">Servings: { recipe.yield }</Typography>
+                                <Typography variant="subtitle1">Servings: { this.recipe.serving }</Typography>
                                 <Typography variant="subtitle2">Per Serving: </Typography>
-                                <Typography>Calories: { Math.floor(recipe.calories / recipe.yield) } kcal</Typography>
-                                <Typography>Fat: { Math.floor(recipe.totalNutrients.FAT.quantity / recipe.yield) } g</Typography>
-                                <Typography>Protein: { Math.floor(recipe.totalNutrients.PROCNT.quantity / recipe.yield) } g</Typography>
-                                <Typography>Total Carb: { totalCarb } g</Typography>
-                                <Typography>Fiber: { fiber } g</Typography>
-                                <Typography>Net Carb: { netCarb } g</Typography>
+                                <Typography>Calories: { this.recipe.calories } kcal</Typography>
+                                <Typography>Fat: { this.recipe.fat } g</Typography>
+                                <Typography>Protein: { this.recipe.protein } g</Typography>
+                                <Typography>Total Carb: { this.recipe.carbs } g</Typography>
+                                <Typography>Fiber: { this.recipe.fiber } g</Typography>
+                                <Typography>Net Carb: { Math.floor(this.recipe.carbs - this.recipe.fiber) } g</Typography>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </CardContent>
                     <Divider className={ classes.divider } light/>
                     <CardActions>
                         <Button>
-                            <a className={ classes.cardLink } href={ recipe.url } rel="noopener noreferrer" target="_blank">{ recipe.source }</a>
+                            <a className={ classes.cardLink } href={ this.recipe.url } rel="noopener noreferrer" target="_blank">{ this.recipe.source }</a>
                         </Button>
                     </CardActions>
                 </Card>
