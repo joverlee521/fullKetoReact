@@ -106,7 +106,7 @@ class RecipeCard extends Component{
         this.recipe = {
             title: externalRecipe.label,
             image: externalRecipe.image,
-            serving: externalRecipe.yield,
+            servings: externalRecipe.yield,
             calories: Math.round(externalRecipe.calories / externalRecipe.yield),
             fat: Math.round(externalRecipe.totalNutrients.FAT.quantity / externalRecipe.yield),
             protein: Math.round(externalRecipe.totalNutrients.PROCNT.quantity / externalRecipe.yield),
@@ -163,7 +163,7 @@ class RecipeCard extends Component{
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails className={ classes.panelDetails }>
                                 <Typography variant="title">Nutrition Facts</Typography>
-                                <Typography variant="subtitle1">Servings: { this.recipe.serving }</Typography>
+                                <Typography variant="subtitle1">Servings: { this.recipe.servings }</Typography>
                                 <Typography variant="subtitle2">Per Serving: </Typography>
                                 <Typography>Calories: { this.recipe.calories } kcal</Typography>
                                 <Typography>Fat: { this.recipe.fat } g</Typography>

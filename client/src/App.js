@@ -10,6 +10,7 @@ import IsItKeto from "./pages/IsItKeto";
 import Recipes from "./pages/Recipes";
 import MealPlanner from "./pages/MealPlanner";
 import AddRecipe from "./pages/AddRecipe";
+import DisplayRecipe from "./pages/DisplayRecipe";
 import Footer from "./components/Footer";
 import "./App.css";
 
@@ -60,9 +61,11 @@ class App extends Component {
 					<Route exact path="/recipes" 
 						render={ props => <Recipes {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>}/>
 					<Route exact path="/mealplanner" 
-						render={ props => <MealPlanner {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>} />
+						render={ props => <MealPlanner {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>}/>
 					<Route exact path="/addRecipe"
-						render={ props => <AddRecipe {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>} />
+						render={ props => <AddRecipe {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>}/>
+					<Route exact path="/fullKetoRecipe/:id"
+						render={ props => <DisplayRecipe {...props} loggedIn={ this.state.loggedIn } user={ this.state.user }/>}/>
 					<Footer/>
 	  	  	  	</div>
 	  	  	</Router>
