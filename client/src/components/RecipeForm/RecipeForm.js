@@ -3,6 +3,9 @@ import { Grid, Typography, Button, TextField, InputAdornment, MuiThemeProvider }
 import CustomTheme from "./CustomTheme";
 import IngredientInput from "./IngredientInput";
 import InstructionInput from "./InstructionInput";
+import API from "../../utils/API";
+
+const theme = CustomTheme();
 
 class RecipeForm extends Component{
     constructor(props){
@@ -71,10 +74,38 @@ class RecipeForm extends Component{
         this.setState({ [state]: tempState });
     }
 
+    submitForm = event => {
+        event.preventDefault();
+        const { user } = this.props;
+        const recipeObj = this.state;
+        recipeObj.AuthorId = user.id;
+        API.postRecipe(user.id, recipeObj)
+        .then(() => {
+            this.props.openModal();
+            this.setState({
+                title: "",
+                description: "",
+                servings: "",
+                servingSize: "",
+                prepTime: "",
+                cookTime: "",
+                ingredients: [
+                    {
+                        name: "",
+                        amount: "",
+                        unit: ""
+                    }
+                ],
+                instructions: [""]
+            });
+        })
+        .catch(error => console.log(error));
+    }
+
     render(){
         return(
-            <MuiThemeProvider theme={ CustomTheme }>
-                <Grid container item component="form" justify="center">
+            <MuiThemeProvider theme={ theme }>
+                <Grid container item component="form" justify="center" onSubmit={ this.submitForm }>
                     <Grid item xs={ 12 }>
                         <TextField 
                             label="Recipe Title" 
@@ -169,6 +200,11 @@ class RecipeForm extends Component{
                     <Button color="primary" variant="contained" onClick={ this.addInstruction }>
                         Add Another Step
                     </Button>
+                    <Grid item container justify="center">
+                        <Button variant="contained" type="submit">
+                            Submit
+                        </Button>
+                    </Grid>
                 </Grid>
              </MuiThemeProvider>
         );

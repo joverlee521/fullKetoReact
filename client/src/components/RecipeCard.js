@@ -98,7 +98,7 @@ class RecipeCard extends Component{
     extractExternalRecipe = (externalRecipe, user) => {
         let fiber;
         if(externalRecipe.totalNutrients.FIBTG){
-            fiber = Math.floor(externalRecipe.totalNutrients.FIBTG.quantity / externalRecipe.yield);
+            fiber = Math.round(externalRecipe.totalNutrients.FIBTG.quantity / externalRecipe.yield);
         }
         else{
             fiber = 0;
@@ -107,10 +107,10 @@ class RecipeCard extends Component{
             title: externalRecipe.label,
             image: externalRecipe.image,
             serving: externalRecipe.yield,
-            calories: Math.floor(externalRecipe.calories / externalRecipe.yield),
-            fat: Math.floor(externalRecipe.totalNutrients.FAT.quantity / externalRecipe.yield),
-            protein: Math.floor(externalRecipe.totalNutrients.PROCNT.quantity / externalRecipe.yield),
-            carbs: Math.floor(externalRecipe.totalNutrients.CHOCDF.quantity / externalRecipe.yield),
+            calories: Math.round(externalRecipe.calories / externalRecipe.yield),
+            fat: Math.round(externalRecipe.totalNutrients.FAT.quantity / externalRecipe.yield),
+            protein: Math.round(externalRecipe.totalNutrients.PROCNT.quantity / externalRecipe.yield),
+            carbs: Math.round(externalRecipe.totalNutrients.CHOCDF.quantity / externalRecipe.yield),
             fiber: fiber,
             source: externalRecipe.source,
             url: externalRecipe.url,
@@ -170,7 +170,7 @@ class RecipeCard extends Component{
                                 <Typography>Protein: { this.recipe.protein } g</Typography>
                                 <Typography>Total Carb: { this.recipe.carbs } g</Typography>
                                 <Typography>Fiber: { this.recipe.fiber } g</Typography>
-                                <Typography>Net Carb: { Math.floor(this.recipe.carbs - this.recipe.fiber) } g</Typography>
+                                <Typography>Net Carb: { Math.round(this.recipe.carbs - this.recipe.fiber) } g</Typography>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </CardContent>

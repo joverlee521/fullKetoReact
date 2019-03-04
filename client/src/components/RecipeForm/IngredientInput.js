@@ -1,29 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Grid, TextField, IconButton, Icon, MenuItem, withStyles } from "@material-ui/core";
-import { deepOrange } from "@material-ui/core/colors";
+import styles from "./Styles";
 
-const units = ["tsp", "Tbsp", "cup", "mL","oz", "g"];
-const styles = {
-    container: {
-        position: "relative",
-        border: "1px solid rgba(0,0,0,0.15)",
-        borderRadius: 20,
-        padding: 20,
-        margin: "10px 0px"
-    },
-    closeBtn: {
-        position: "absolute",
-        top: 0,
-        right: 0,
-        padding: 5,
-        color: deepOrange[900],
-        "&:hover": {
-            color: "#fff",
-            backgroundColor: deepOrange[600]
-        }
-    }
-}
+const units = ["tsp", "Tbsp", "cup", "mL","oz", "gram"];
 
 function IngredientInput(props){
     const { classes } = props;

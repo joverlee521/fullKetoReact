@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes){
             allowNull: false,
             defaultValue: "https://user-images.githubusercontent.com/40774762/53704189-45cb8080-3dcf-11e9-85d7-74392894a053.jpeg"
         },
-        serving: {
+        servings: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes){
             }
         },
         servingSize: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
         prepTime: {

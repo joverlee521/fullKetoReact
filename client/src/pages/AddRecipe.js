@@ -5,7 +5,7 @@ import { deepOrange } from "@material-ui/core/colors";
 import Banner from "../components/Banner";
 import GoogleSignInButton from "../components/GoogleSignInButton";
 import RecipeForm from "../components/RecipeForm/RecipeForm";
-import API from "../utils/API";
+import Modal from "../components/Modal";
 
 const styles = {
     container: {
@@ -19,8 +19,16 @@ class AddRecipe extends Component{
     constructor(props){
         super(props);
         this.state ={
-
+            open: false
         }
+    }
+
+    openModal = () => {
+        this.setState({ open: true });
+    }
+
+    closeModal = () => {
+        this.setState({ open: false });
     }
 
     render(){
@@ -30,13 +38,19 @@ class AddRecipe extends Component{
                 <Banner title="Add Recipe" />
                 <Grid container item justify="center" alignContent="center" className={ classes.container }>
                 { loggedIn ? 
-                    <RecipeForm />
+                    <RecipeForm user={ this.props.user } openModal={ this.openModal }/>
                     : <Grid item>
                         <Typography variant="h4" color="inherit">Please sign in to add a recipe</Typography>
                         <GoogleSignInButton width="190px"/>
                     </Grid>
                 }
                 </Grid>
+                <Modal open={ this.state.open }
+                    title="Recipe Added!"
+                    message="Your recipe has been successfully added!"
+                    close={ this.closeModal }
+                    closeBtn="Close"
+                />
             </Grid>
         )
     }

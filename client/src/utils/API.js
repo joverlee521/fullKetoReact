@@ -26,6 +26,9 @@ export default {
     saveExternalRecipe: function(data){
         return axios.post("/api/externalRecipes", data);
     },
+    postRecipe: function(userId, data){
+        return axios.post("/api/recipes/" + userId, data);
+    },
     deleteExternalRecipe: function(userId, recipeUri){
         return axios.delete(`/api/externalRecipes/${userId}/${recipeUri}`);
     },
