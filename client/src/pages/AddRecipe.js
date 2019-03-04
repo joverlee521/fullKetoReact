@@ -4,7 +4,7 @@ import { Grid, Typography, withStyles } from "@material-ui/core";
 import { deepOrange } from "@material-ui/core/colors";
 import Banner from "../components/Banner";
 import GoogleSignInButton from "../components/GoogleSignInButton";
-import RecipeForm from "../components/RecipeForm";
+import RecipeForm from "../components/RecipeForm/RecipeForm";
 import API from "../utils/API";
 
 const styles = {

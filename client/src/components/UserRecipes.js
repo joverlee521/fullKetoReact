@@ -12,8 +12,11 @@ const styles = {
     },
     addRecipeBtn: {
         color: "#fff",
-        backgroundColor: deepOrange[900],
-        margin: "30px 10px"
+        backgroundColor: deepOrange[600],
+        margin: "30px 10px",
+        "&:hover": {
+            backgroundColor: deepOrange[900]
+        }
     }
 };
 
