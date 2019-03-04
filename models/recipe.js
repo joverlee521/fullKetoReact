@@ -12,7 +12,55 @@ module.exports = function(sequelize, DataTypes){
         },
         description: {
             type: DataTypes.TEXT,
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: [2, 150]
+            }
+        },
+        image: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: "https://user-images.githubusercontent.com/40774762/53704189-45cb8080-3dcf-11e9-85d7-74392894a053.jpeg"
+        },
+        serving: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                isInt: true,
+                min: 1
+            }
+        },
+        servingSize: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        prepTime: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        cookTime: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        calories: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        fat: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        protein: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        carbs: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        fiber: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         },
         ingredients: {
             type: DataTypes.TEXT,
@@ -34,9 +82,9 @@ module.exports = function(sequelize, DataTypes){
                 return this.setDataValue("instructions", val.join(";"));
             }
         },
-        totalCarb: {
-            type: DataTypes.FLOAT,
-            allowNull: false
+        source: {
+            type: DataTypes.STRING,
+            defaultValue: "FullKeto"
         }
     });
 

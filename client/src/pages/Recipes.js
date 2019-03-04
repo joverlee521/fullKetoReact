@@ -63,6 +63,7 @@ class Recipes extends Component {
 
 	setRecipeState = result => {
 		let recipes = result.data.hits;
+		console.log(recipes);
 		const recipeState = HelperMethods.createSubArrays(recipes, 12);
 		this.setState({ recipes: recipeState, page: 1, searching: false });
 	}
