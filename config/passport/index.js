@@ -16,7 +16,9 @@ passport.deserializeUser((id, done) => {
 		where: {
 			id: id
 		},
-		attributes: ["id", "username", "favoriteEdamamRecipes"]
+		attributes: {
+			exclude: ["googleId", "createdAt", "updatedAt"]
+		}
 	}).then(user => {
 			console.log('======= DESERIALIZE USER CALLED ======');
 			done(null, user);

@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes){
             type: DataTypes.STRING,
             allowNull: true
         },
-        serving: {
+        servings: {
             type: DataTypes.INTEGER,
             allowNull: false
         },

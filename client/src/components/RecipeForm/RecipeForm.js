@@ -78,6 +78,7 @@ class RecipeForm extends Component{
         event.preventDefault();
         const { user } = this.props;
         const recipeObj = this.state;
+        recipeObj.instructions = recipeObj.instructions.join(";");
         recipeObj.AuthorId = user.id;
         API.postRecipe(user.id, recipeObj)
         .then(() => {

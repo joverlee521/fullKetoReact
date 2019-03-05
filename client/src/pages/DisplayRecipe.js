@@ -1,56 +1,113 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Grid, Typography, withStyles } from "@material-ui/core";
+import { Grid, Typography, Paper, withStyles } from "@material-ui/core";
 import { deepOrange } from "@material-ui/core/colors";
 import Banner from "../components/Banner";
-import GoogleSignInButton from "../components/GoogleSignInButton";
-import RecipeForm from "../components/RecipeForm/RecipeForm";
-import Modal from "../components/Modal";
+import API from "../utils/API";
+import HelperMethods from "../utils/helperMethods";
 
-const styles = {
+const styles = theme =>  ({
     container: {
         flex: "2 0 auto",
         textAlign: "center",
-        color: deepOrange[900]
+        color: deepOrange[900],
+        padding: 10
+    },
+    imgContainer: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        alignSelf: "center",
+        margin: "10px 5px",
+        [theme.breakpoints.up("sm")]: {
+            margin: "20px 5px"
+        }
+    },
+    listContainer: {
+        display: "flex",
+        justifyContent: "center",
+        padding: 0
     }
-};
+});
 
 class DisplayRecipe extends Component{
     constructor(props){
         super(props);
         this.state ={
-            open: false
+            recipe: {}
         }
     }
 
-    openModal = () => {
-        this.setState({ open: true });
-    }
-
-    closeModal = () => {
-        this.setState({ open: false });
+    componentWillMount(){
+        // Grab the recipe id from the URL
+        const url = window.location.href;
+        const urlArray = url.split("/");
+        const recipeId = urlArray[(urlArray.length - 1)];
+        // Find the recipe in the database
+        API.getRecipe(recipeId)
+        .then(result => {
+            result.data.ingredients = JSON.parse(result.data.ingredients);
+            result.data.instructions = result.data.instructions.split(";");
+            this.setState({ recipe: result.data })
+        })
+        .catch(error => console.log(error));
     }
 
     render(){
-        const { classes, loggedIn } = this.props;
+        const { classes } = this.props;
+        const { recipe } = this.state;
         return(
             <Grid container direction="column" className="container">
-                <Banner title="Full Keto Recipe" />
+                <Banner title={ recipe.title } subtitle={ recipe.Author && `Author: ${recipe.Author.username}`}/>
+                { recipe.id &&
                 <Grid container item justify="center" alignContent="center" className={ classes.container }>
-                { loggedIn ? 
-                    <RecipeForm user={ this.props.user } openModal={ this.openModal }/>
-                    : <Grid item>
-                        <Typography variant="h4" color="inherit">Please sign in to add a recipe</Typography>
-                        <GoogleSignInButton width="190px"/>
+                    <Grid container item xs={ 12 }>
+                        <Grid item xs={ 12 }>
+                            <Typography variant="h6"><b>Total Time:</b> { recipe.prepTime + recipe.cookTime } mins</Typography>
+                        </Grid>
+                        <Grid item xs={ 12 }>
+                            <Typography variant="subtitle1"><b>Prep: </b> { recipe.prepTime } mins <span>&nbsp; + &nbsp;</span> <b>Cook: </b> { recipe.cookTime } mins</Typography>
+                        </Grid>
                     </Grid>
-                }
+                    <Grid item xs={ 12 }>
+                        <Typography variant="h6" gutterBottom>Servings: { recipe.servings } <span>&nbsp;&nbsp;</span> Serving Size: { recipe.servingSize }</Typography>
+                    </Grid>
+                    <Grid item container xs={ 12 } md={ 8 } justify="center" alignItems="center">
+                        <Paper component={ Grid } xs={ 11 } sm={ 8 } md={ 6 } item className={ classes.imgContainer }>
+                            <img src={ recipe.image } alt={ `${recipe.title}` } width="80%" height="auto"/>
+                        </Paper>
+                        { recipe.description.length > 0 &&
+                            <Grid item xs={ 11 } md={ 5 }>
+                                <Typography variant="subtitle1">{ HelperMethods.capitalizeFirstLetter(recipe.description) }</Typography>
+                            </Grid>
+                        }
+                    </Grid>
+                    <Grid item xs={ 12 } sm={ 6 }>
+                        <Typography variant="h6"><u>Ingredients: </u></Typography>
+                        <ul className={ classes.listContainer }>
+                        {
+                            recipe.ingredients.map((ingredient,index) => (
+                                <li key={ index }>
+                                    <Typography align="left" variant="h6">{ `${ingredient.amount} ${ingredient.unit} of ${ingredient.name}` }</Typography>
+                                </li>
+                            ))
+                        }
+                        </ul>
+                    </Grid>
+                    <Grid item xs={ 12 } sm={ 6 }>
+                        <Typography variant="h6"><u>Instructions: </u></Typography>
+                        <ol className={ classes.listContainer }>
+                        {
+                            recipe.instructions.map((instruction, index) => (
+                                <li key={ index }>
+                                    <Typography align="left" variant="h6">{ HelperMethods.capitalizeFirstLetter(instruction) }</Typography>
+                                </li>
+                            ))
+                        }
+                        </ol>
+                    </Grid>
                 </Grid>
-                <Modal open={ this.state.open }
-                    title="Recipe Added!"
-                    message="Your recipe has been successfully added!"
-                    close={ this.closeModal }
-                    closeBtn="Close"
-                />
+                }
             </Grid>
         )
     }

@@ -24,8 +24,8 @@ function Banner(props){
     return(
         <Grid container item alignItems="center" justify="center" className={ classes.banner }>
             <Grid item>
-                <Typography color="inherit" variant="display3" className={ classes.centerText }>{ props.title }</Typography>
-                { props.subtitle && <Typography color="inherit" variant="subheading" className={ classes.centerText }>{ props.subtitle }</Typography>}
+                <Typography color="inherit" variant="h3" className={ classes.centerText }>{ props.title }</Typography>
+                { props.subtitle && <Typography color="inherit" variant="h6" className={ classes.centerText }>{ props.subtitle }</Typography>}
             </Grid>
         </Grid>
     );

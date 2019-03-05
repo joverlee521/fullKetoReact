@@ -20,6 +20,9 @@ export default {
     getUserRecipes: function(userId){
         return axios.get("/api/recipes/" + userId);
     },
+    getRecipe: function(recipeId){
+        return axios.get("/api/recipes/find/" + recipeId);
+    },
     updateUser: function(userId, data){
         return axios.put("/api/user/" + userId, data);
     },

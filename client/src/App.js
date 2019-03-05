@@ -33,6 +33,7 @@ class App extends Component {
 				const { user } = res.data;
 				// If there is a user, set the state with user info 
 				if(user){
+					user.favoriteEdamamRecipes = user.favoriteEdamamRecipes.split(";");
 					this.setState({
 						loggedIn: true,
 						user: user

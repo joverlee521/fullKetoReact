@@ -64,23 +64,11 @@ module.exports = function(sequelize, DataTypes){
         },
         ingredients: {
             type: DataTypes.TEXT,
-            allowNull: false,
-            get(){
-                return this.getDataValue("ingredients").split(";");
-            },
-            set(val){
-                return this.setDataValue("ingredients", val.join(";"));
-            }
+            allowNull: false
         },
         instructions: {
             type: DataTypes.TEXT,
-            allowNull: false,
-            get(){
-                return this.getDataValue("instructions").split(";");
-            },
-            set(val){
-                return this.setDataValue("instructions", val.join(";"));
-            }
+            allowNull: false
         },
         source: {
             type: DataTypes.STRING,

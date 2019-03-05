@@ -4,6 +4,14 @@ const headerId = process.env.NUTRI_ID;
 const headerKey = process.env.NUTRI_KEY;
 
 module.exports = {
+    getRecipe: function(req, res){
+        const recipeId = parseInt(req.params.recipeId);
+        db.Recipe.findById(recipeId, {
+            include: [{ model: db.User, as: "Author", attributes: ["username"] }]
+        })
+        .then(recipe => res.json(recipe))
+        .catch(error => console.log(error));
+    },
     getUserRecipes: function(req, res){
         const id = parseInt(req.params.id);
         db.Recipe.findAll({
@@ -66,6 +74,7 @@ module.exports = {
                 req.body.protein = Math.round(protein / req.body.servings);
                 req.body.carbs = Math.round(carbs / req.body.servings);
                 req.body.fiber = Math.round(fiber / req.body.servings);
+                req.body.ingredients = JSON.stringify(req.body.ingredients);
                 // Create recipe in database
                 db.Recipe.create(req.body)
                 .then(() => res.sendStatus(200))
