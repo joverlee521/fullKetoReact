@@ -46,16 +46,18 @@ class UserRecipes extends Component{
         const { classes, user } = this.props;
         return(
             <Grid container item justify="center" alignContent="center" className={ classes.container }>
-                { this.state.recipes.length > 0 ? 
+                {   this.state.recipes.length === 0 &&
+                    <Grid container item direction="column" justify="center" alignContent="center"> 
+                        <Typography variant="h6">You don't have any recipes!</Typography>
+                        <Typography variant="subheading">Try adding a recipe!</Typography>
+                    </Grid>
+                }
+                <Button component={ Link } to="/addRecipe" variant="contained" className={ classes.addRecipeBtn }>Add A Recipe</Button>
+                { this.state.recipes.length > 0 &&
                     <Grid container item justify="center">
                         {this.state.recipes.map(recipe => (
                             <RecipeCard key={ recipe.id } recipe={ recipe } loggedIn={ true } user={ user }/>
                         ))}
-                    </Grid>
-                    : <Grid container item direction="column" justify="center" alignContent="center"> 
-                        <Typography variant="h6">You don't have any recipes!</Typography>
-                        <Typography variant="subheading">Try adding a recipe!</Typography>
-                        <Button component={ Link } to="/addRecipe" variant="contained" className={ classes.addRecipeBtn }>Add A Recipe</Button>
                     </Grid>
                 }
             </Grid>
