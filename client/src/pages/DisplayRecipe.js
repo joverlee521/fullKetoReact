@@ -25,6 +25,7 @@ const styles = theme =>  ({
     },
     listContainer: {
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         padding: 0
     }

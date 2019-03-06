@@ -77,19 +77,19 @@ class RecipeForm extends Component{
     submitForm = event => {
         event.preventDefault();
         const { user } = this.props;
-        const recipeObj = this.state;
+        // Deep copy of the state object
+        // Makes sure manipulation of instructions array does not change the instructions state
+        const recipeObj = JSON.parse(JSON.stringify(this.state));
+        if(recipeObj.description.length === 0){
+            recipeObj.description = null;
+        }
         recipeObj.instructions = recipeObj.instructions.join(";");
         recipeObj.AuthorId = user.id;
         API.postRecipe(user.id, recipeObj)
         .then(() => {
             this.props.openModal();
             this.setState({
-                title: "",
-                description: "",
-                servings: "",
-                servingSize: "",
-                prepTime: "",
-                cookTime: "",
+                instructions: [""],
                 ingredients: [
                     {
                         name: "",
@@ -97,7 +97,12 @@ class RecipeForm extends Component{
                         unit: ""
                     }
                 ],
-                instructions: [""]
+                title: "",
+                description: "",
+                servings: "",
+                servingSize: "",
+                prepTime: "",
+                cookTime: ""
             });
         })
         .catch(error => console.log(error));
