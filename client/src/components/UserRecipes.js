@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Grid, Typography, Button, withStyles } from "@material-ui/core";
 import { deepOrange } from "@material-ui/core/colors";
-import API from "../utils/API";
 import RecipeCard from "./RecipeCard";
+import Pagination from "../components/Pagination";
+import API from "../utils/API";
+import HelperMethods from "../utils/helperMethods";
 
 const styles = {
     container: {
@@ -25,7 +27,8 @@ class UserRecipes extends Component{
     constructor(props){
         super(props);
         this.state = {
-            recipes: []
+            recipes: [],
+            page: 1
         }
     }
 
@@ -36,10 +39,14 @@ class UserRecipes extends Component{
             results.data.forEach(recipe => {
                 recipe.url = "/fullKetoRecipe/" + recipe.id;
             });
-            console.log(results.data);
-            this.setState({ recipes: results.data });
+            const recipeState = HelperMethods.createSubArrays(results.data, 8);
+            this.setState({ recipes: recipeState });
         })
         .catch(error => console.log(error));
+    }
+
+    changePage = newPage => {
+        this.setState({ page: newPage });
     }
 
     render(){
@@ -55,9 +62,10 @@ class UserRecipes extends Component{
                 <Button component={ Link } to="/addRecipe" variant="contained" className={ classes.addRecipeBtn }>Add A Recipe</Button>
                 { this.state.recipes.length > 0 &&
                     <Grid container item justify="center">
-                        {this.state.recipes.map(recipe => (
-                            <RecipeCard key={ recipe.id } recipe={ recipe } loggedIn={ true } user={ user }/>
+                        {this.state.recipes[(this.state.page -1)].map(recipe => (
+                            <RecipeCard key={ recipe.id } recipe={ recipe } user={ user }/>
                         ))}
+                        <Pagination pages={ this.state.recipes.length } changePage={ this.changePage }/>
                     </Grid>
                 }
             </Grid>

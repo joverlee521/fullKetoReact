@@ -89,6 +89,12 @@ class RecipeForm extends Component{
         .then(() => {
             this.props.openModal();
             this.setState({
+                title: "",
+                description: "",
+                servings: "",
+                servingSize: "",
+                prepTime: "",
+                cookTime: "",
                 instructions: [""],
                 ingredients: [
                     {
@@ -96,13 +102,7 @@ class RecipeForm extends Component{
                         amount: "",
                         unit: ""
                     }
-                ],
-                title: "",
-                description: "",
-                servings: "",
-                servingSize: "",
-                prepTime: "",
-                cookTime: ""
+                ]
             });
         })
         .catch(error => console.log(error));
