@@ -83,15 +83,13 @@ class RecipeCard extends Component{
         const { user, recipe, externalRecipe } = this.props;
         if(externalRecipe){
             this.extractExternalRecipe(externalRecipe, user);
-            if(user.favoriteEdamamRecipes && user.favoriteEdamamRecipes.indexOf(externalRecipe.uri) >= 0){
-                this.setState({ favorite: true });
-            }
         }
         else if(recipe){
-            if(user.favoriteEdamamRecipes && user.favoriteEdamamRecipes.indexOf(recipe.uri) >= 0){
-                this.setState({ favorite: true})
-            }
             this.recipe = recipe;
+        }
+        const recipeUri = externalRecipe ? externalRecipe.uri : recipe.uri;
+        if(user.favoriteEdamamRecipes && user.favoriteEdamamRecipes.has(recipeUri)){
+            this.setState({ favorite: true });
         }
     }
 
@@ -123,23 +121,20 @@ class RecipeCard extends Component{
 
     addToFavorites = () => {
         const { user } = this.props;
-        if(user.favoriteEdamamRecipes.length === 1 && user.favoriteEdamamRecipes[0] === ""){
-            user.favoriteEdamamRecipes = [this.recipe.uri];
+        if(user.favoriteEdamamRecipes.size === 1 && user.favoriteEdamamRecipes.has("")){
+            user.favoriteEdamamRecipes.clear();
         }
-        else{
-            user.favoriteEdamamRecipes.push(this.recipe.uri);
-        }
-        Promise.all([API.updateUser(user.id, { favoriteEdamamRecipes: user.favoriteEdamamRecipes.join(";") }), API.saveExternalRecipe(this.recipe)])
+        user.favoriteEdamamRecipes.add(this.recipe.uri);
+        Promise.all([API.updateUser(user.id, { favoriteEdamamRecipes: [...user.favoriteEdamamRecipes].join(";") }), API.saveExternalRecipe(this.recipe)])
         .then(res => this.setState({ favorite: true }))
         .catch(err => console.log(err));
     }
 
     removeFromFavorites = () => {
         const { user, recipe } = this.props;
-        const index = user.favoriteEdamamRecipes.indexOf(recipe.uri);
-        user.favoriteEdamamRecipes.splice(index, 1);
+        user.favoriteEdamamRecipes.delete(recipe.uri);
         const recipeUri = recipe.uri.split("_");
-        Promise.all([API.updateUser(user.id, { favoriteEdamamRecipes: user.favoriteEdamamRecipes.join(";") }), API.deleteExternalRecipe(user.id, recipeUri[1])])
+        Promise.all([API.updateUser(user.id, { favoriteEdamamRecipes: [...user.favoriteEdamamRecipes].join(";") }), API.deleteExternalRecipe(user.id, recipeUri[1])])
         .then(() => this.setState({ favorite: false }, () => {
             if(this.props.updateRecipes){
                 this.props.updateRecipes();
