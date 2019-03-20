@@ -50,6 +50,31 @@ The application is deployed to Heroku: https://fullketo.herokuapp.com
 
 ![My Recipes Tab](https://user-images.githubusercontent.com/40774762/53908442-2ff2d100-4004-11e9-946a-e5d8bf88d8b0.png)
 
+### Add a Recipe
+* Clicking the "Add a Recipe" button will direct users to the Add Recipe form
+* The Add Recipe form is split into 3 sections:
+  
+  * The top section is used to fill in general information about the recipe: 
+  
+![Add Recipe Form: Top Section](https://user-images.githubusercontent.com/40774762/54723098-abd03b80-4b23-11e9-9fa5-1ac7132b6f8d.png)
+
+  * The Ingredients section allows users to dynamically add ingredients to the recipe:
+    * Clicking the "Add Another Ingredient" button will render another input group to add another ingredient
+    * Clicking the "X" in the upper right hand corner will delete the ingredient from the list
+  
+![Add Recipe Form: Ingredients Section](https://user-images.githubusercontent.com/40774762/54723523-0d44da00-4b25-11e9-95c2-2682264dbc46.png)
+
+  * The Instructions section also allows users to dynamically add instructions to the recipe:
+  
+![Add Recipe Form: Instructions Section](https://user-images.githubusercontent.com/40774762/54723630-6280eb80-4b25-11e9-8cdd-d19689c2e21c.png)
+
+## Future Features
+### Meal Planner
+* Allow signed in users to plan out a week's meal in a calendar
+* Allow them to search external or internal recipes 
+* Drag and drop recipe cards on to the meal planner calendar
+* Automatically calculate the daily net carbs based on the recipes added
+
 ## Technologies Used
 * React
 * Material-UI
